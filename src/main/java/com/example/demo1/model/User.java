@@ -92,6 +92,9 @@ public class User {
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String comment;
 
+    @Column(nullable = true)
+    private Integer web_authority;
+
     public User(){}
 
     public User(Integer id,String comment,Integer status){
@@ -367,6 +370,14 @@ public class User {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Integer getWeb_authority() {
+        return web_authority;
+    }
+
+    public void setWeb_authority(Integer web_authority) {
+        this.web_authority = web_authority;
     }
 
     public void replaceStr(ReplaceLabels replaceLabels){

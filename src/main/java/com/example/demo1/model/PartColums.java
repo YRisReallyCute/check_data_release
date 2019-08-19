@@ -9,6 +9,7 @@ public class PartColums {
 
     private Integer origin_baike;
     private Integer baike_id;
+    private Integer baike_auth;
     private Integer origin_disease_xy;
     private Integer disease_xy_id;
     private Integer origin_disease_zy;
@@ -51,7 +52,7 @@ public class PartColums {
     }
 
     public PartColums(Integer id, String info_mc, Integer status, String comment,
-                      Integer baike,Integer baike_id,Integer disease_xy,Integer disease_xy_id,
+                      Integer baike,Integer baike_id,Integer baike_auth,Integer disease_xy,Integer disease_xy_id,
                       Integer disease_zy,Integer disease_zy_id,Integer symptom_xy,Integer symptom_xy_id,Integer symptom_xy_batch,
                       Integer symptom_zy,Integer symptom_zy_id,Integer symptom_zy_batch,Integer xy,Integer xy_id,Integer zy,Integer zy_id) {
         this.id = id;
@@ -60,6 +61,7 @@ public class PartColums {
         this.comment = comment;
         this.origin_baike=baike;
         this.baike_id=baike_id;
+        this.baike_auth=baike_auth;
         this.origin_disease_xy=disease_xy;
         this.disease_xy_id=disease_xy_id;
         this.origin_disease_zy=disease_zy;
@@ -83,6 +85,7 @@ public class PartColums {
         this.comment = da.getComment();
         this.origin_baike=da.getOrigin_baike();
         this.baike_id=da.getBaike_id();
+        this.baike_auth=da.getBaike_auth();
         this.origin_disease_xy=da.getOrigin_disease_xy();
         this.disease_xy_id=da.getDisease_xy_id();
         this.origin_disease_zy=da.getOrigin_disease_zy();
@@ -122,6 +125,14 @@ public class PartColums {
 
     public void setOrigin_baike(Integer origin_baike) {
         this.origin_baike = origin_baike;
+    }
+
+    public Integer getBaike_auth() {
+        return baike_auth;
+    }
+
+    public void setBaike_auth(Integer baike_auth) {
+        this.baike_auth = baike_auth;
     }
 
     public Integer getOrigin_disease_xy() {

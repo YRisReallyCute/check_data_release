@@ -100,6 +100,9 @@ public class data_all {
     private Integer baike_id;
 
     @Column(nullable = true)
+    private Integer baike_auth;
+
+    @Column(nullable = true)
     private Integer origin_disease_zy;
 
     @Column(nullable = true)
@@ -569,5 +572,13 @@ public class data_all {
 
     public void setXy_id(Integer xy_id) {
         this.xy_id = xy_id;
+    }
+
+    public Integer getBaike_auth() {
+        return baike_auth;
+    }
+
+    public void setBaike_auth(Integer baike_auth) {
+        this.baike_auth = baike_auth;
     }
 }
