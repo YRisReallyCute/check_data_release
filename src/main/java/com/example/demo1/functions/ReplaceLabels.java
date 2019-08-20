@@ -9,11 +9,11 @@ import java.util.Optional;
 @Component
 public class ReplaceLabels {
 
-    private static String str1_0="<sapn class=\"title_1\">";
+    private static String str1_0="<span class=\"title_1\">";
 
     private static String str1_1="</span>";
 
-    private static String str2_0="<sapn class=\"title_2\">";
+    private static String str2_0="<span class=\"title_2\">";
 
     private static String str2_1="</span>";
 
