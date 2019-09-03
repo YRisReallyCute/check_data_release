@@ -39,16 +39,21 @@ public class ReplaceLabels {
         String str1_1 = replaceLabels.getStr1_1();
         String str2_0 = replaceLabels.getStr2_0();
         String str2_1 = replaceLabels.getStr2_1();
+        
+        if(strToReplace == null){
+            return null;
+        }
 
         return strToReplace
                 .replaceAll("<br />", "<br/>")
+                .replaceAll("<!--.*-->", "")
                 .replaceAll("<(?!(h1>)|(/h1>)|(p>)|(/p>)|(br/>))","小于") // 非标签的 < 更换为 小于
                 .replaceAll("(?<!(<h1)|(</h1)|(<p)|</p|(<br/))>","大于")  // 非标签的 > 更换为 大于
                 .replaceAll("<h1>",str1_0)
-                .replaceAll("</h1><br/>",str1_1)
+                .replaceAll("(</h1><br/>)|(</h1>)",str1_1)
                 .replaceAll("<h2>",str2_0)
-                .replaceAll("</h2><br/>",str2_1)
-                .replaceAll("<!--.*-->", "");
+                .replaceAll("(</h2><br/>)|(</h2)",str2_1);
+
     }
 
 }
