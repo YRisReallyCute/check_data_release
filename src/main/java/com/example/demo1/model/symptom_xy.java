@@ -332,31 +332,52 @@ public class symptom_xy {
     }
 
     public void replaceStr(ReplaceLabels replaceLabels){
-        String str1_0=replaceLabels.getStr1_0();
-        String str1_1=replaceLabels.getStr1_1();
-        String str2_0=replaceLabels.getStr2_0();
-        String str2_1=replaceLabels.getStr2_1();
+//        String str1_0=replaceLabels.getStr1_0();
+//        String str1_1=replaceLabels.getStr1_1();
+//        String str2_0=replaceLabels.getStr2_0();
+//        String str2_1=replaceLabels.getStr2_1();
+//
+//        setInfo_mcjs(getInfo_mcjs().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_bm(getInfo_bm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_bybj(getInfo_bybj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_bzsz(getInfo_bzsz().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_dfrq(getInfo_dfrq().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_fbbw(getInfo_fbbw().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_fj(getInfo_fj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_fk(getInfo_fk().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_hl(getInfo_hl().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_jbzd(getInfo_jbzd().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_lcbx(getInfo_lcbx().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_qt(getInfo_qt().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_tnlf(getInfo_tnlf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_wfwz(getInfo_wfwz().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_yfbj(getInfo_yfbj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_yh(getInfo_yh().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_yslf(getInfo_yslf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_ywmc(getInfo_ywmc().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_zjlf(getInfo_zjlf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
+//        setInfo_zybm(getInfo_zybm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 
-        setInfo_mcjs(getInfo_mcjs().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_bm(getInfo_bm().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_bybj(getInfo_bybj().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_bzsz(getInfo_bzsz().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_dfrq(getInfo_dfrq().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_fbbw(getInfo_fbbw().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_fj(getInfo_fj().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_fk(getInfo_fk().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_hl(getInfo_hl().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_jbzd(getInfo_jbzd().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_lcbx(getInfo_lcbx().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_qt(getInfo_qt().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_tnlf(getInfo_tnlf().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_wfwz(getInfo_wfwz().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_yfbj(getInfo_yfbj().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_yh(getInfo_yh().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_yslf(getInfo_yslf().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_ywmc(getInfo_ywmc().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_zjlf(getInfo_zjlf().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
-        setInfo_zybm(getInfo_zybm().replaceAll("<h1>",str1_0).replaceAll("</h1>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2>",str2_1));
 
+        setInfo_mcjs(replaceLabels.rep(replaceLabels, getInfo_mcjs()));
+        setInfo_bm(replaceLabels.rep(replaceLabels, getInfo_bm()));
+        setInfo_bybj(replaceLabels.rep(replaceLabels, getInfo_bybj()));
+        setInfo_bzsz(replaceLabels.rep(replaceLabels, getInfo_bzsz()));
+        setInfo_dfrq(replaceLabels.rep(replaceLabels, getInfo_dfrq()));
+        setInfo_fbbw(replaceLabels.rep(replaceLabels, getInfo_fbbw()));
+        setInfo_fj(replaceLabels.rep(replaceLabels, getInfo_fj()));
+        setInfo_fk(replaceLabels.rep(replaceLabels, getInfo_fk()));
+        setInfo_hl(replaceLabels.rep(replaceLabels, getInfo_hl()));
+        setInfo_jbzd(replaceLabels.rep(replaceLabels, getInfo_jbzd()));
+        setInfo_lcbx(replaceLabels.rep(replaceLabels, getInfo_lcbx()));
+        setInfo_qt(replaceLabels.rep(replaceLabels, getInfo_qt()));
+        setInfo_tnlf(replaceLabels.rep(replaceLabels, getInfo_tnlf()));
+        setInfo_wfwz(replaceLabels.rep(replaceLabels, getInfo_wfwz()));
+        setInfo_yfbj(replaceLabels.rep(replaceLabels, getInfo_yfbj()));
+        setInfo_yh(replaceLabels.rep(replaceLabels, getInfo_yh()));
+        setInfo_yslf(replaceLabels.rep(replaceLabels, getInfo_yslf()));
+        setInfo_ywmc(replaceLabels.rep(replaceLabels, getInfo_ywmc()));
+        setInfo_zjlf(replaceLabels.rep(replaceLabels, getInfo_zjlf()));
+        setInfo_zybm(replaceLabels.rep(replaceLabels, getInfo_zybm()));
     }
 }

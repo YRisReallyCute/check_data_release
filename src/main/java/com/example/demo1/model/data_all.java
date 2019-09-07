@@ -144,6 +144,12 @@ public class data_all {
     @Column(nullable = true)
     private Integer xy_id;
 
+    @Column(nullable = true)
+    private Integer origin_human;
+
+    @Column(nullable = true)
+    private Integer human_id;
+
     public data_all(){}
 
     public data_all(Integer id
@@ -580,5 +586,21 @@ public class data_all {
 
     public void setBaike_auth(Integer baike_auth) {
         this.baike_auth = baike_auth;
+    }
+
+    public Integer getOrigin_human() {
+        return origin_human;
+    }
+
+    public void setOrigin_human(Integer origin_human) {
+        this.origin_human = origin_human;
+    }
+
+    public Integer getHuman_id() {
+        return human_id;
+    }
+
+    public void setHuman_id(Integer human_id) {
+        this.human_id = human_id;
     }
 }

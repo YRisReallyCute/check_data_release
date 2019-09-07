@@ -5,10 +5,10 @@ import com.example.demo1.functions.ReplaceLabels;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "data_disease_zy_baidubaike")
-public class baike_disease_zy {
+@Table(name = "data_symptom_zy_human")
+public class human_symptom_zy {
+
     @Id
     @GeneratedValue
     private Integer id;
@@ -82,7 +82,7 @@ public class baike_disease_zy {
     private LocalDateTime create_time;
 
     @Column(nullable = true)
-    private LocalDateTime update_time;
+    private LocalDateTime check_data_time;
 
     @Column(nullable = true)
     private Integer status;
@@ -93,7 +93,35 @@ public class baike_disease_zy {
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String comment;
 
-    baike_disease_zy(){}
+
+
+    public human_symptom_zy() {
+    }
+
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getOrigin_url() {
+        return origin_url;
+    }
+
+    public void setOrigin_url(String origin_url) {
+        this.origin_url = origin_url;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public Integer getId() {
         return id;
@@ -279,43 +307,16 @@ public class baike_disease_zy {
         this.create_time = create_time;
     }
 
-    public LocalDateTime getUpdate_time() {
-        return update_time;
+    public LocalDateTime getCheck_data_time() {
+        return check_data_time;
     }
 
-    public void setUpdate_time(LocalDateTime update_time) {
-        this.update_time = update_time;
+    public void setCheck_data_time(LocalDateTime check_data_time) {
+        this.check_data_time = check_data_time;
     }
 
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getOrigin_url() {
-        return origin_url;
-    }
-
-    public void setOrigin_url(String origin_url) {
-        this.origin_url = origin_url;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public void replaceStr(ReplaceLabels replaceLabels){
-//        String str1_0=replaceLabels.getStr1_0();
-//        String str1_1=replaceLabels.getStr1_1();
-//        String str2_0=replaceLabels.getStr2_0();
-//        String str2_1=replaceLabels.getStr2_1();
 
         setInfo_mcjs(replaceLabels.rep(replaceLabels, getInfo_mcjs()));
         setInfo_bm(replaceLabels.rep(replaceLabels, getInfo_bm()));
@@ -338,27 +339,5 @@ public class baike_disease_zy {
         setInfo_zjlf(replaceLabels.rep(replaceLabels, getInfo_zjlf()));
         setInfo_xybm(replaceLabels.rep(replaceLabels, getInfo_xybm()));
 
-//        setInfo_mcjs(getInfo_mcjs().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_bm(getInfo_bm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_bybj(getInfo_bybj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_bzsz(getInfo_bzsz().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_dfrq(getInfo_dfrq().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_fbbw(getInfo_fbbw().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_fj(getInfo_fj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_fk(getInfo_fk().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_hl(getInfo_hl().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_jbzd(getInfo_jbzd().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_lcbx(getInfo_lcbx().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_qt(getInfo_qt().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_tnlf(getInfo_tnlf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_wfwz(getInfo_wfwz().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_yfbj(getInfo_yfbj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_yh(getInfo_yh().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_yslf(getInfo_yslf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_ywmc(getInfo_ywmc().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_zjlf(getInfo_zjlf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_xybm(getInfo_xybm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-
     }
-
 }

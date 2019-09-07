@@ -15,38 +15,61 @@ import java.util.Optional;
 @CrossOrigin
 public class findByIdController {
 
-    @Autowired
+    private final
     UserRepository userRepository;
 
-    @Autowired
+    private final
     XyRepository xyRepository;
 
-    @Autowired
+    private final
     ZyRepository zyRepository;
 
-    @Autowired
+    private final
     DiseaseXyRepository diseaseXyRepository;
 
-    @Autowired
+    private final
     DiseaseZyRepository diseaseZyRepository;
 
-    @Autowired
+    private final
     SymptomXyRepository symptomXyRepository;
 
-    @Autowired
+    private final
     SymptomZyRepository symptomZyRepository;
 
-    @Autowired
+    private final
     BaikeDiseaseXyRepository baikeDiseaseXyRepository;
 
-    @Autowired
+    private final
     BaikeDiseaseZyRepository baikeDiseaseZyRepository;
 
-    @Autowired
+    private final
     BaikeSymptomXyRepository baikeSymptomXyRepository;
 
-    @Autowired
+    private final
     ReplaceLabels replaceLabels;
+
+    private final
+    HumanSymptomZyRepository humanSymptomZyRepository;
+
+    private final
+    YaobwDrugPatentRepository yaobwDrugPatentRepository;
+
+    @Autowired
+    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository, YaobwDrugPatentRepository yaobwDrugPatentRepository) {
+        this.xyRepository = xyRepository;
+        this.userRepository = userRepository;
+        this.zyRepository = zyRepository;
+        this.diseaseXyRepository = diseaseXyRepository;
+        this.diseaseZyRepository = diseaseZyRepository;
+        this.symptomXyRepository = symptomXyRepository;
+        this.symptomZyRepository = symptomZyRepository;
+        this.baikeDiseaseXyRepository = baikeDiseaseXyRepository;
+        this.baikeDiseaseZyRepository = baikeDiseaseZyRepository;
+        this.baikeSymptomXyRepository = baikeSymptomXyRepository;
+        this.replaceLabels = replaceLabels;
+        this.humanSymptomZyRepository = humanSymptomZyRepository;
+        this.yaobwDrugPatentRepository = yaobwDrugPatentRepository;
+    }
 
 
     /** 1
@@ -303,6 +326,52 @@ public class findByIdController {
 
         //替换标签<h1>,<h2>
         list.get().replaceStr(replaceLabels);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+
+    /*
+     * 11
+     * model: human_symptom_zy
+     * repository: HumanSymptomZyRepsitory
+     * table: data_symptom_zy_human
+     */
+    @GetMapping("symptom_zy_human/findById")
+    public Map<String,Object> symptomZyHuman(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<human_symptom_zy> list= humanSymptomZyRepository.findById(id);
+
+        //替换标签<h1>,<h2>
+        list.get().replaceStr(replaceLabels);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+    /*
+     * 12
+     * model: data_drug_patent_yaobw
+     * repository: yaobwDrugPatentRepository
+     * table: data_patent_yaobw
+     */
+    @GetMapping("drug_patent_yaobw/findById")
+    public Map<String,Object> drugPatentYaobw(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<yaobw_drug_patent> list= yaobwDrugPatentRepository.findById(id);
 
         if (!list.isPresent()){
             map.put("code","404");
