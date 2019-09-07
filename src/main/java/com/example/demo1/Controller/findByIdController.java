@@ -51,8 +51,11 @@ public class findByIdController {
     private final
     HumanSymptomZyRepository humanSymptomZyRepository;
 
+    private final
+    YaobwDrugPatentRepository yaobwDrugPatentRepository;
+
     @Autowired
-    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository) {
+    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository, YaobwDrugPatentRepository yaobwDrugPatentRepository) {
         this.xyRepository = xyRepository;
         this.userRepository = userRepository;
         this.zyRepository = zyRepository;
@@ -65,6 +68,7 @@ public class findByIdController {
         this.baikeSymptomXyRepository = baikeSymptomXyRepository;
         this.replaceLabels = replaceLabels;
         this.humanSymptomZyRepository = humanSymptomZyRepository;
+        this.yaobwDrugPatentRepository = yaobwDrugPatentRepository;
     }
 
 
@@ -347,6 +351,27 @@ public class findByIdController {
 
         //替换标签<h1>,<h2>
         list.get().replaceStr(replaceLabels);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+    /*
+     * 12
+     * model: data_drug_patent_yaobw
+     * repository: yaobwDrugPatentRepository
+     * table: data_patent_yaobw
+     */
+    @GetMapping("drug_patent_yaobw/findById")
+    public Map<String,Object> drugPatentYaobw(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<yaobw_drug_patent> list= yaobwDrugPatentRepository.findById(id);
 
         if (!list.isPresent()){
             map.put("code","404");
