@@ -1,4 +1,4 @@
-package com.example.demo1.model;
+package com.example.demo1.model.disease_and_symptom;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

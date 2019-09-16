@@ -3,12 +3,8 @@ package com.example.demo1.service;
 
 import com.example.demo1.Repository.DataAllRepository;
 import com.example.demo1.model.PartColums;
-import com.example.demo1.model.data_all;
-import com.github.pagehelper.PageHelper;
+import com.example.demo1.model.disease_and_symptom.data_all;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

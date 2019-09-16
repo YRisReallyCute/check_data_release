@@ -2,8 +2,13 @@ package com.example.demo1.Controller;
 
 
 import com.example.demo1.Repository.*;
+import com.example.demo1.Repository.patent.YaobwDrugPatentRepository;
+import com.example.demo1.Repository.patent.ZyybdAppDrugRepository;
 import com.example.demo1.functions.ReplaceLabels;
 import com.example.demo1.model.*;
+import com.example.demo1.model.disease_and_symptom.*;
+import com.example.demo1.model.patent.yaobw_drug_patent;
+import com.example.demo1.model.patent.zyybdApp_patent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,8 +59,11 @@ public class findByIdController {
     private final
     YaobwDrugPatentRepository yaobwDrugPatentRepository;
 
+    private final
+    ZyybdAppDrugRepository zyybdAppDrugRepository;
+
     @Autowired
-    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository, YaobwDrugPatentRepository yaobwDrugPatentRepository) {
+    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository, YaobwDrugPatentRepository yaobwDrugPatentRepository, ZyybdAppDrugRepository zyybdAppDrugRepository) {
         this.xyRepository = xyRepository;
         this.userRepository = userRepository;
         this.zyRepository = zyRepository;
@@ -69,6 +77,7 @@ public class findByIdController {
         this.replaceLabels = replaceLabels;
         this.humanSymptomZyRepository = humanSymptomZyRepository;
         this.yaobwDrugPatentRepository = yaobwDrugPatentRepository;
+        this.zyybdAppDrugRepository = zyybdAppDrugRepository;
     }
 
 
@@ -372,6 +381,27 @@ public class findByIdController {
     public Map<String,Object> drugPatentYaobw(@RequestParam Integer id){
         Map<String,Object> map = new LinkedHashMap<String, Object>();
         Optional<yaobw_drug_patent> list= yaobwDrugPatentRepository.findById(id);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+    /*
+     * 13
+     * model: data_drug_patent_yaobw
+     * repository: yaobwDrugPatentRepository
+     * table: data_patent_yaobw
+     */
+    @GetMapping("drug_patent_zyybdApp/findById")
+    public Map<String,Object> drugPatentZyybdApp(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<zyybdApp_patent> list= zyybdAppDrugRepository.findById(id);
 
         if (!list.isPresent()){
             map.put("code","404");

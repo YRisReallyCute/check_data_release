@@ -3,20 +3,11 @@ package com.example.demo1.Controller;
 
 import com.example.demo1.Repository.DataAllRepository;
 import com.example.demo1.model.PartColums;
-import com.example.demo1.model.data_all;
+import com.example.demo1.model.disease_and_symptom.data_all;
 import com.example.demo1.service.DataAllService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.Predicate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -68,7 +59,7 @@ public class DataAllController {
         int disease_zy_baidubaike=0,disease_zy_zgyyxxcxpt=0,disease_zy_zgyyxxcxpt_old=0,
                 disease_xy_baidubaike=0,disease_xy_zgyyxxcxpt=0,disease_xy_zgyyxxcxpt_old=0,
                 symptom_zy_baidubaike=0,symptom_zy_zgyyxxcxpt=0,
-                symptom_xy_baidubaike=0,symptom_xy_zgyyxxcxpt=0;
+                symptom_xy_baidubaike=0,symptom_xy_zgyyxxcxpt=0,symptom_human=0;
 
         if(!type.equals("")){
             String[] type_list=type.split("/");
@@ -87,6 +78,8 @@ public class DataAllController {
                     disease_zy_zgyyxxcxpt_old = 1;
                 } else if (type_list[i].equals("diseaseXyOld")) {
                     disease_xy_zgyyxxcxpt_old = 1;
+                }else if (type_list[i].equals("human")) {
+                    symptom_human = 1;
                 } else {
                 }
             }
@@ -94,7 +87,7 @@ public class DataAllController {
 //        if(symptom_xy_zgyyxxcxpt==0)s_x_batch=0;
 //        if(symptom_zy_zgyyxxcxpt==0)s_z_batch=0;
 
-        PartColums p=new PartColums(status,s_x_batch,s_z_batch,name,symptom_zy_baidubaike,disease_xy_zgyyxxcxpt,disease_zy_zgyyxxcxpt,symptom_xy_zgyyxxcxpt,symptom_zy_zgyyxxcxpt,disease_xy_zgyyxxcxpt_old,disease_zy_zgyyxxcxpt_old);
+        PartColums p=new PartColums(status,s_x_batch,s_z_batch,name,symptom_zy_baidubaike,disease_xy_zgyyxxcxpt,disease_zy_zgyyxxcxpt,symptom_xy_zgyyxxcxpt,symptom_zy_zgyyxxcxpt,disease_xy_zgyyxxcxpt_old,disease_zy_zgyyxxcxpt_old,symptom_human);
 
         map.put("code","200");
         map.putAll(dataAllService.getPartList(p,page,size));

@@ -1,7 +1,8 @@
-package com.example.demo1.Repository;
+package com.example.demo1.Repository.patent;
 
-import com.example.demo1.model.data_all_drug;
+import com.example.demo1.model.patent.data_all_drug;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
-public interface DataAllDrugRepository extends JpaRepository<data_all_drug, Integer>, CrudRepository<data_all_drug, Integer> {
+public interface DataAllDrugRepository extends JpaRepository<data_all_drug, Integer>, JpaSpecificationExecutor<data_all_drug>,CrudRepository<data_all_drug, Integer> {
 
     @Modifying
     @Transactional
@@ -39,10 +40,9 @@ public interface DataAllDrugRepository extends JpaRepository<data_all_drug, Inte
             "a.update_time = CASE WHEN :#{#u.update_time} IS NULL THEN a.update_time ELSE :#{#u.update_time} END ," +
             "a.check_data_time = CASE WHEN :#{#u.check_data_time} IS NULL THEN a.check_data_time ELSE :#{#u.check_data_time} END ," +
             "a.status = CASE WHEN :#{#u.status} IS NULL THEN a.status ELSE :#{#u.status} END ," +
-            "a.origin_url = CASE WHEN :#{#u.origin_url} IS NULL THEN a.origin_url ELSE :#{#u.origin_url} END ," +
-            "a.source_yaobw = CASE WHEN :#{#u.source_yaobw} IS NULL THEN a.source_yaobw ELSE :#{#u.source_yaobw} END ," +
+            "a.origin_yaobw = CASE WHEN :#{#u.origin_yaobw} IS NULL THEN a.origin_yaobw ELSE :#{#u.origin_yaobw} END ," +
             "a.yaobw_id = CASE WHEN :#{#u.yaobw_id} IS NULL THEN a.yaobw_id ELSE :#{#u.yaobw_id} END ," +
-            "a.source_zyybd = CASE WHEN :#{#u.source_zyybd} IS NULL THEN a.source_zyybd ELSE :#{#u.source_zyybd} END ," +
+            "a.origin_zyybd = CASE WHEN :#{#u.origin_zyybd} IS NULL THEN a.origin_zyybd ELSE :#{#u.origin_zyybd} END ," +
             "a.zyybd_id = CASE WHEN :#{#u.zyybd_id} IS NULL THEN a.zyybd_id ELSE :#{#u.zyybd_id} END ," +
             "a.comment = CASE WHEN :#{#u.comment} IS NULL THEN a.comment ELSE :#{#u.comment} END " +
             "where a.id = :#{#u.id}")

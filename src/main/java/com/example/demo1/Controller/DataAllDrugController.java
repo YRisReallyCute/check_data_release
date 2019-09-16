@@ -1,12 +1,15 @@
 package com.example.demo1.Controller;
 
 
-import com.example.demo1.Repository.DataAllDrugRepository;
-import com.example.demo1.model.data_all_drug;
+import com.example.demo1.Repository.patent.DataAllDrugRepository;
+import com.example.demo1.model.patent.PartColumsPatent;
+import com.example.demo1.model.patent.data_all_drug;
+import com.example.demo1.service.DataAllDrugPatentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,6 +17,9 @@ import java.util.Optional;
 @RequestMapping(path = "/data_all_drug_patent")
 @CrossOrigin
 public class DataAllDrugController {
+
+    @Autowired
+    private DataAllDrugPatentService dataAllDrugPatentService;
 
     @Autowired
     private DataAllDrugRepository dataAllDrugReposity;
@@ -24,10 +30,10 @@ public class DataAllDrugController {
         Map<String, Object> map = new HashMap<>();
         Optional<data_all_drug> r = dataAllDrugReposity.findById(id);
         if(r.isPresent()){
-            map.put("code", 200);
+            map.put("code", "200");
             map.put("result", r);
         }else{
-            map.put("code", 404);
+            map.put("code", "404");
             map.put("msg", "没有结果");
         }
         return map;
@@ -78,6 +84,47 @@ public class DataAllDrugController {
             map.put("code","400");
         }
         return map;
-
     }
+
+    @GetMapping(path = "/getPartList")   @ResponseBody
+    //@ResponseStatus(code= HttpStatus.SWITCHING_PROTOCOLS,reason = "success")
+    public Map<String,Object> getPartList(@RequestParam int page,
+                                          @RequestParam int size,
+                                          @RequestParam int status,
+                                          @RequestParam (name = "name", required = false, defaultValue = "") String name,
+                                          @RequestParam (name = "type",required = false,defaultValue = "")String type
+    )
+    {
+        Map<String,Object> map = new LinkedHashMap<String,Object>();
+
+//        int s_x_batch=Integer.parseInt(symptom_xy_batch);
+//        int s_z_batch=Integer.parseInt(symptom_zy_batch);
+
+        int yaobw=0;
+        int zyybd=0;
+
+        if(!type.equals("")){
+            String[] type_list=type.split("/");
+            for (int i=0;i<type_list.length;i++) {
+                if (type_list[i].equals("yaobw")) {
+                    yaobw = 1;
+                } else if (type_list[i].equals("zyybd")) {
+                    zyybd = 1;
+                } else {
+                }
+            }
+        }
+//        if(symptom_xy_zgyyxxcxpt==0)s_x_batch=0;
+//        if(symptom_zy_zgyyxxcxpt==0)s_z_batch=0;
+
+        PartColumsPatent p=new PartColumsPatent(status,name,yaobw,zyybd);
+
+        map.put("code","200");
+        Map<String,Object> map2=dataAllDrugPatentService.getPartList(p,page,size);
+        map.putAll(dataAllDrugPatentService.getPartList(p,page,size));
+
+        return map;
+    }
+
+
 }

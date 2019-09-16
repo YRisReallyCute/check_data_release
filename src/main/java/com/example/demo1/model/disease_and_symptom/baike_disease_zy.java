@@ -1,4 +1,4 @@
-package com.example.demo1.model;
+package com.example.demo1.model.disease_and_symptom;
 
 import com.example.demo1.functions.ReplaceLabels;
 
@@ -7,8 +7,8 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "data_disease_xy_baidubaike")
-public class baike_disease_xy {
+@Table(name = "data_disease_zy_baidubaike")
+public class baike_disease_zy {
     @Id
     @GeneratedValue
     private Integer id;
@@ -93,7 +93,7 @@ public class baike_disease_xy {
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String comment;
 
-    baike_disease_xy(){}
+    baike_disease_zy(){}
 
     public Integer getId() {
         return id;
@@ -312,6 +312,10 @@ public class baike_disease_xy {
     }
 
     public void replaceStr(ReplaceLabels replaceLabels){
+//        String str1_0=replaceLabels.getStr1_0();
+//        String str1_1=replaceLabels.getStr1_1();
+//        String str2_0=replaceLabels.getStr2_0();
+//        String str2_1=replaceLabels.getStr2_1();
 
         setInfo_mcjs(replaceLabels.rep(replaceLabels, getInfo_mcjs()));
         setInfo_bm(replaceLabels.rep(replaceLabels, getInfo_bm()));
@@ -334,7 +338,7 @@ public class baike_disease_xy {
         setInfo_zjlf(replaceLabels.rep(replaceLabels, getInfo_zjlf()));
         setInfo_xybm(replaceLabels.rep(replaceLabels, getInfo_xybm()));
 
-//        setInfo_mcjs(getInfo_mcjs().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于").replaceAll("(?<=(<span>)|(</span>)|(<p>)|(<br/>))<(?=[0-9])",""));
+//        setInfo_mcjs(getInfo_mcjs().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 //        setInfo_bm(getInfo_bm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 //        setInfo_bybj(getInfo_bybj().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 //        setInfo_bzsz(getInfo_bzsz().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));

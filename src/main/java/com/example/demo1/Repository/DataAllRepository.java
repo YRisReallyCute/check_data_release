@@ -1,10 +1,6 @@
 package com.example.demo1.Repository;
 
-import com.example.demo1.model.PartColums;
-import com.example.demo1.model.User;
-import com.example.demo1.model.data_all;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
+import com.example.demo1.model.disease_and_symptom.data_all;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,7 +9,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 public interface DataAllRepository extends JpaRepository<data_all,Integer>, PagingAndSortingRepository<data_all,Integer>, JpaSpecificationExecutor<data_all> {
 //    @Transactional

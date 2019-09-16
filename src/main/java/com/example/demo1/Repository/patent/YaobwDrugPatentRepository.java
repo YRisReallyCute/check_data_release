@@ -1,6 +1,6 @@
-package com.example.demo1.Repository;
+package com.example.demo1.Repository.patent;
 
-import com.example.demo1.model.yaobw_drug_patent;
+import com.example.demo1.model.patent.yaobw_drug_patent;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 

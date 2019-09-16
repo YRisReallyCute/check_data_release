@@ -1,4 +1,4 @@
-package com.example.demo1.model;
+package com.example.demo1.model.patent;
 
 
 import javax.persistence.*;
@@ -99,8 +99,8 @@ public class data_all_drug {
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_zxbz; // 执行标准
 
-    @Column(nullable = false)
-    private String origin_url; // 链接
+//    @Column(nullable = false)
+//    private String origin_url; // 链接
 
 //    @Column(nullable = false)
 //    private String origin_body; // 原始网页的url
@@ -116,13 +116,13 @@ public class data_all_drug {
 
 
     @Column
-    private Integer source_yaobw; // 是否来源于药标网
+    private Integer origin_yaobw; // 是否来源于药标网
 
     @Column
     private Integer yaobw_id; // 如果是的话， 对应的药标网的id
 
     @Column
-    private Integer source_zyybd; // 是否来源于中医药宝典
+    private Integer origin_zyybd; // 是否来源于中医药宝典
 
     @Column
     private Integer zyybd_id; // 对应的id
@@ -160,7 +160,6 @@ public class data_all_drug {
         this.info_ywxhzy = info_ywxhzy;
         this.info_fl = info_fl;
         this.info_zxbz = info_zxbz;
-        this.origin_url = origin_url;
         this.status = status;
         this.comment = comment;
     }
@@ -349,14 +348,6 @@ public class data_all_drug {
         this.info_zxbz = info_zxbz;
     }
 
-    public String getOrigin_url() {
-        return origin_url;
-    }
-
-    public void setOrigin_url(String origin_url) {
-        this.origin_url = origin_url;
-    }
-
     public LocalDateTime getCreate_time() {
         return create_time;
     }
@@ -381,12 +372,20 @@ public class data_all_drug {
         this.check_data_time = check_data_time;
     }
 
-    public Integer getSource_yaobw() {
-        return source_yaobw;
+    public Integer getOrigin_yaobw() {
+        return origin_yaobw;
     }
 
-    public void setSource_yaobw(Integer source_yaobw) {
-        this.source_yaobw = source_yaobw;
+    public void setOrigin_yaobw(Integer origin_yaobw) {
+        this.origin_yaobw = origin_yaobw;
+    }
+
+    public Integer getOrigin_zyybd() {
+        return origin_zyybd;
+    }
+
+    public void setOrigin_zyybd(Integer origin_zyybd) {
+        this.origin_zyybd = origin_zyybd;
     }
 
     public Integer getYaobw_id() {
@@ -397,13 +396,6 @@ public class data_all_drug {
         this.yaobw_id = yaobw_id;
     }
 
-    public Integer getSource_zyybd() {
-        return source_zyybd;
-    }
-
-    public void setSource_zyybd(Integer source_zyybd) {
-        this.source_zyybd = source_zyybd;
-    }
 
     public Integer getZyybd_id() {
         return zyybd_id;

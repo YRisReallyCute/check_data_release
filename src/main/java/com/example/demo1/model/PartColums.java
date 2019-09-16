@@ -1,5 +1,7 @@
 package com.example.demo1.model;
 
+import com.example.demo1.model.disease_and_symptom.data_all;
+
 public class PartColums {
 //    private Integer rest_status;
     private Integer id;
@@ -24,6 +26,8 @@ public class PartColums {
     private Integer xy_id;
     private Integer origin_zy;
     private Integer zy_id;
+    private Integer origin_human;
+    private Integer human_id;
 
 
     public PartColums(){}
@@ -36,7 +40,7 @@ public class PartColums {
     }
 
     public PartColums(Integer status,Integer symptom_xy_batch,Integer symptom_zy_batch,String name,Integer origin_baike,Integer origin_disease_xy,Integer origin_disease_zy,
-                      Integer origin_symptom_xy,Integer origin_symptom_zy,Integer origin_xy,Integer origin_zy){
+                      Integer origin_symptom_xy,Integer origin_symptom_zy,Integer origin_xy,Integer origin_zy,Integer origin_human){
 
         this.status=status;
         this.symptom_xy_batch=symptom_xy_batch;
@@ -49,6 +53,7 @@ public class PartColums {
         this.origin_symptom_zy=origin_symptom_zy;
         this.origin_xy=origin_xy;
         this.origin_zy=origin_zy;
+        this.origin_human=origin_human;
     }
 
     public PartColums(Integer id, String info_mc, Integer status, String comment,
@@ -100,6 +105,8 @@ public class PartColums {
         this.xy_id=da.getXy_id();
         this.origin_zy=da.getOrigin_zy();
         this.zy_id=da.getZy_id();
+        this.origin_human=da.getOrigin_human();
+        this.human_id=da.getHuman_id();
     }
 
 //    public PartColums(Integer id, String info_mc, Integer status, String comment,Integer batch,Integer origin_id,Integer baike,Integer disease_xy,Integer disease_zy,Integer symptom_xy,Integer symptom_zy,Integer xy,Integer zy) {
@@ -285,5 +292,21 @@ public class PartColums {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Integer getOrigin_human() {
+        return origin_human;
+    }
+
+    public void setOrigin_human(Integer origin_human) {
+        this.origin_human = origin_human;
+    }
+
+    public Integer getHuman_id() {
+        return human_id;
+    }
+
+    public void setHuman_id(Integer human_id) {
+        this.human_id = human_id;
     }
 }

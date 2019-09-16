@@ -1,14 +1,13 @@
-package com.example.demo1.model;
+package com.example.demo1.model.disease_and_symptom;
 
 import com.example.demo1.functions.ReplaceLabels;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "data_disease_zy_zgyyxxcxpt")
-public class disease_zy {
+@Table(name = "data_symptom_xy_baidubaike")
+public class baike_symptom_xy {
     @Id
     @GeneratedValue
     private Integer id;
@@ -92,6 +91,8 @@ public class disease_zy {
 
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String comment;
+
+    baike_symptom_xy(){}
 
     public Integer getId() {
         return id;
@@ -308,7 +309,6 @@ public class disease_zy {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
     public void replaceStr(ReplaceLabels replaceLabels){
 //        String str1_0=replaceLabels.getStr1_0();
 //        String str1_1=replaceLabels.getStr1_1();

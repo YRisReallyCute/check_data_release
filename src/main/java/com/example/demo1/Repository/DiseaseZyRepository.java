@@ -1,6 +1,6 @@
 package com.example.demo1.Repository;
 
-import com.example.demo1.model.disease_zy;
+import com.example.demo1.model.disease_and_symptom.disease_zy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
