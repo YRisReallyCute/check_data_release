@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "conf_symptom_zy_baidubaike_title")
+@Table(name = "data_conf_symptom_zy_baidubaike_title")
 public class conf_symptom_zy_baidubaike_title {
     @Id
     @GeneratedValue
@@ -21,6 +21,10 @@ public class conf_symptom_zy_baidubaike_title {
 
     @Column(nullable = true)
     private LocalDateTime update_time;
+
+    public conf_symptom_zy_baidubaike_title(){
+
+    }
 
     public conf_symptom_zy_baidubaike_title(String title,String col){
         this.setTitle(title);

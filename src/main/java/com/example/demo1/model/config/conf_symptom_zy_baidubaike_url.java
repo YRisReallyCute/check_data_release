@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "conf_symptom_zy_baidubaike_url")
+@Table(name = "data_conf_symptom_zy_baidubaike_url")
 public class conf_symptom_zy_baidubaike_url {
     @Id
     @GeneratedValue
@@ -23,6 +23,11 @@ public class conf_symptom_zy_baidubaike_url {
     private LocalDateTime update_time;
 
     public conf_symptom_zy_baidubaike_url(){}
+
+    public conf_symptom_zy_baidubaike_url(String name){
+        this.info_mc=name;
+        this.crawler_url="";
+    }
 
     public Integer getId() {
         return id;
