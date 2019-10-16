@@ -17,6 +17,9 @@ import java.util.List;
 
 public interface UserRepository  extends JpaRepository<User,Integer> , PagingAndSortingRepository<User,Integer> {
 
+    @Transactional
+    @Query(value = "select count(*) from data_baidu_baike",nativeQuery = true)
+    int getNum();
 
     @Query(value="select new com.example.demo1.model.PartColums(t.id,t.info_mc,t.status,t.comment) from User t where t.info_mc like CONCAT('%',?2,'%')  and t.status=?1")
     List<PartColums> findPartList(int status,String info_mc);

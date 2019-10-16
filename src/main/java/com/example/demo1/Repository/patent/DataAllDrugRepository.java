@@ -9,8 +9,13 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface DataAllDrugRepository extends JpaRepository<data_all_drug, Integer>, JpaSpecificationExecutor<data_all_drug>,CrudRepository<data_all_drug, Integer> {
+
+    @Transactional
+    @Query(value = "select * from data_all_drug_patent where info_ym like CONCAT(?1)",nativeQuery = true)
+    List<data_all_drug> findByName(String name);
 
     @Modifying
     @Transactional

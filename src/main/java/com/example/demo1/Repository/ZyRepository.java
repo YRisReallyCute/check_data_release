@@ -16,6 +16,11 @@ public interface ZyRepository extends JpaRepository<zgyyxxcxpt_zy,Integer>, Pagi
 //    @Query(value="select new com.example.demo1.model.PartColums(t.id,t.info_mc,t.status,t.comment) from zgyyxxcxpt_zy t")
 //    List<PartColums> findall(PageRequest pageRequest);
 
+    @Transactional
+    @Query(value = "select count(*) from data_disease_zy_zgyyxxcxpt_old",nativeQuery = true)
+    int getNum();
+
+
     @Query(value="select new com.example.demo1.model.PartColums(t.id,t.info_mc,t.status,t.comment) from zgyyxxcxpt_zy t where t.info_mc like CONCAT('%',?2,'%')  and t.status=?1")
     List<PartColums> findPartList(int status,String info_mc);
 

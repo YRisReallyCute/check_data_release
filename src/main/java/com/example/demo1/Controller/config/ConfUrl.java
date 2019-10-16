@@ -2,20 +2,17 @@ package com.example.demo1.Controller.config;
 
 import com.example.demo1.Repository.config.ConfSymZyBaikeUrlRepository;
 import com.example.demo1.model.config.conf_symptom_zy_baidubaike_url;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin
 public class ConfUrl {
     @Autowired
     private ConfSymZyBaikeUrlRepository confSymZyBaikeUrlRepository;
@@ -26,8 +23,23 @@ public class ConfUrl {
         Sort sort=new Sort(Sort.DEFAULT_DIRECTION,"id");
         PageRequest pageRequest=new PageRequest(page,size,sort);
         Page<conf_symptom_zy_baidubaike_url> page1= confSymZyBaikeUrlRepository.findAll(pageRequest);
+
         map.put("code","200");
         map.put("result",page1);
+        return map;
+    }
+
+    @GetMapping("/conf/search_content_all")
+    private Map<String,Object> searchContentAll(@RequestParam String content,@RequestParam Integer page,@RequestParam Integer size){
+        Map<String,Object> map=new LinkedHashMap<>();
+        List<conf_symptom_zy_baidubaike_url> list=confSymZyBaikeUrlRepository.findByNameAll(content);
+        List<conf_symptom_zy_baidubaike_url> list2=new LinkedList<>();
+        for(int i=page*size;(i<page*size+size)&&(i<list.size());i++){
+            list2.add(new conf_symptom_zy_baidubaike_url(list.get(i)));
+        }
+        map.put("code","200");
+        map.put("totalNums",list.size());
+        map.put("result",list2);
         return map;
     }
 

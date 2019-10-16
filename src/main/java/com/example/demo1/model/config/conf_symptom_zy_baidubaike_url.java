@@ -29,6 +29,14 @@ public class conf_symptom_zy_baidubaike_url {
         this.crawler_url="";
     }
 
+    public conf_symptom_zy_baidubaike_url(conf_symptom_zy_baidubaike_url c){
+       this.id=c.getId();
+       this.info_mc=c.getInfo_mc();
+       this.crawler_url=c.getCrawler_url();
+       this.status=c.getStatus();
+       this.update_time=c.getUpdate_time();
+    }
+
     public Integer getId() {
         return id;
     }

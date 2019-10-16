@@ -16,7 +16,10 @@ public class conf_online_crawler_settings {
     private String origin;
 
     @Column
-    private Integer isAuto;
+    private String isAuto;
+
+    @Column
+    private Integer totalNum;
 
     @Column
     private String log;
@@ -47,11 +50,11 @@ public class conf_online_crawler_settings {
         this.origin = origin;
     }
 
-    public Integer getIsAuto() {
+    public String getIsAuto() {
         return isAuto;
     }
 
-    public void setIsAuto(Integer isAuto) {
+    public void setIsAuto(String isAuto) {
         this.isAuto = isAuto;
     }
 
@@ -61,5 +64,13 @@ public class conf_online_crawler_settings {
 
     public void setLog(String log) {
         this.log = log;
+    }
+
+    public Integer getTotalNum() {
+        return totalNum;
+    }
+
+    public void setTotalNum(Integer totalNum) {
+        this.totalNum = totalNum;
     }
 }

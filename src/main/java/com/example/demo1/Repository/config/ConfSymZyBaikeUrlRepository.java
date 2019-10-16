@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface ConfSymZyBaikeUrlRepository extends JpaRepository<conf_symptom_zy_baidubaike_url,Integer> , PagingAndSortingRepository<conf_symptom_zy_baidubaike_url,Integer>,CrudRepository<conf_symptom_zy_baidubaike_url,Integer> {
@@ -22,5 +23,10 @@ public interface ConfSymZyBaikeUrlRepository extends JpaRepository<conf_symptom_
     @Modifying
     @Transactional
     int update(Integer id);
+
+    @Transactional
+    @Query(value = "select * from data_conf_symptom_zy_baidubaike_url where info_mc like CONCAT(?1)",nativeQuery = true)
+//    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT(?1)",nativeQuery = true)
+    List<conf_symptom_zy_baidubaike_url> findByNameAll(String name);
 
 }

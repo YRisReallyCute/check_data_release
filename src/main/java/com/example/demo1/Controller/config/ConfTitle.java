@@ -15,6 +15,7 @@ import java.util.*;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:8080")
+//@CrossOrigin
 public class ConfTitle {
     @Autowired
     private ConfSymZyBaikeTitleRepository confSymZyBaikeTitleRepository;

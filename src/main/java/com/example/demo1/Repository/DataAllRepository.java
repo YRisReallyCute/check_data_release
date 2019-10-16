@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 public interface DataAllRepository extends JpaRepository<data_all,Integer>, PagingAndSortingRepository<data_all,Integer>, JpaSpecificationExecutor<data_all> {
 //    @Transactional
@@ -38,6 +39,48 @@ public interface DataAllRepository extends JpaRepository<data_all,Integer>, Pagi
 //
 //    @Query("select new com.example.demo1.model.PartColums(t.id,t.info_mc,t.status,t.comment,t.origin_baike,t.baike_id,t.origin_disease_xy,t.disease_xy_id,t.origin_disease_zy,t.disease_zy_id,t.origin_symptom_xy,t.symptom_xy_id,t.symptom_xy_batch,t.origin_symptom_zy,t.symptom_zy_id,t.symptom_zy_batch,t.origin_xy,t.xy_id,t.origin_zy,t.zy_id) from data_all t where t.info_mc like CONCAT('%',?2,'%')  and t.status=?1 and t.origin_xy=1")
 //    List<PartColums> findPartListXy(int status, String info_mc, PageRequest pageRequest);
+
+    @Transactional
+//    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT('%',?1,'%')",nativeQuery = true)
+    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT(?1)",nativeQuery = true)
+    List<data_all> findByName(String name);
+
+    @Transactional
+    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT('%',?1,'%')",nativeQuery = true)
+//    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT(?1)",nativeQuery = true)
+    List<data_all> findByNameAll(String name);
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_baike=1",nativeQuery = true)
+    @Transactional
+    int baike_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_disease_zy=1",nativeQuery = true)
+    @Transactional
+    int disease_zy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_disease_xy=1",nativeQuery = true)
+    @Transactional
+    int disease_xy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_symptom_zy=1",nativeQuery = true)
+    @Transactional
+    int symptom_zy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_symptom_xy=1",nativeQuery = true)
+    @Transactional
+    int symptom_xy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_zy=1",nativeQuery = true)
+    @Transactional
+    int zy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_xy=1",nativeQuery = true)
+    @Transactional
+    int xy_num();
+
+    @Query(value = "select count(*) from data_all_symptom_zy where origin_human=1",nativeQuery = true)
+    @Transactional
+    int human_num();
 
     @Modifying
     @Transactional
