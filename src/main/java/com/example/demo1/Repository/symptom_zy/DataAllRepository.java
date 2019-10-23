@@ -1,4 +1,4 @@
-package com.example.demo1.Repository;
+package com.example.demo1.Repository.symptom_zy;
 
 import com.example.demo1.model.disease_and_symptom.data_all;
 import org.springframework.data.jpa.repository.JpaRepository;

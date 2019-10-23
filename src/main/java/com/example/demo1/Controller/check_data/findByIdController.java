@@ -1,11 +1,10 @@
-package com.example.demo1.Controller;
+package com.example.demo1.Controller.check_data;
 
 
-import com.example.demo1.Repository.*;
 import com.example.demo1.Repository.patent.YaobwDrugPatentRepository;
 import com.example.demo1.Repository.patent.ZyybdAppDrugRepository;
+import com.example.demo1.Repository.symptom_zy.*;
 import com.example.demo1.functions.ReplaceLabels;
-import com.example.demo1.model.*;
 import com.example.demo1.model.disease_and_symptom.*;
 import com.example.demo1.model.patent.yaobw_drug_patent;
 import com.example.demo1.model.patent.zyybdApp_patent;

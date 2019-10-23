@@ -1,6 +1,6 @@
-package com.example.demo1.Repository;
+package com.example.demo1.Repository.symptom_zy;
 
-import com.example.demo1.model.human_symptom_zy;
+import com.example.demo1.model.disease_and_symptom.human_symptom_zy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 

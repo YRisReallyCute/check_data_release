@@ -1,16 +1,12 @@
-package com.example.demo1.Repository;
-import com.example.demo1.model.User;
+package com.example.demo1.Repository.symptom_zy;
+import com.example.demo1.model.disease_and_symptom.User;
 import com.example.demo1.model.PartColums;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-import org.springframework.data.web.PageableDefault;
-import com.github.pagehelper.PageInfo;
 
 import javax.transaction.Transactional;
 import java.util.List;

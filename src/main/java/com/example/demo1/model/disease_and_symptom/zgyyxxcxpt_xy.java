@@ -1,12 +1,13 @@
-package com.example.demo1.model;
+package com.example.demo1.model.disease_and_symptom;
+
 import com.example.demo1.functions.ReplaceLabels;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "data_disease_zy_zgyyxxcxpt_old")
-public class zgyyxxcxpt_zy {
+@Table(name = "data_disease_xy_zgyyxxcxpt_old")
+public class zgyyxxcxpt_xy {
     @Id
     @GeneratedValue
     private Integer id;
@@ -14,7 +15,8 @@ public class zgyyxxcxpt_zy {
     @Column(nullable = false, length = 255)
     private String info_mc;
 
-    @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+    @Lob
+    @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_mcjs;
 
     @Lob @Basic(fetch = FetchType.LAZY)
@@ -34,7 +36,7 @@ public class zgyyxxcxpt_zy {
     private String info_fbbw;
 
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
-    private String info_xybm;
+    private String info_zybm;
 
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_bybj;
@@ -90,15 +92,15 @@ public class zgyyxxcxpt_zy {
     @Lob @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String comment;
 
-    public zgyyxxcxpt_zy(){}
+    public zgyyxxcxpt_xy(){}
 
-    public zgyyxxcxpt_zy(Integer id,String comment,Integer status){
+    public zgyyxxcxpt_xy(Integer id,String comment,Integer status){
         this.id=id;
         this.status=status;
         this.comment=comment;
     }
 
-    public zgyyxxcxpt_zy(Integer id
+    public zgyyxxcxpt_xy(Integer id
             ,String info_mc
             ,String info_mcjs
             ,String info_bm
@@ -106,7 +108,7 @@ public class zgyyxxcxpt_zy {
             ,String info_fk
             ,String info_dfrq
             ,String info_fbbw
-            ,String info_xybm
+            ,String info_zybm
             ,String info_bybj
             ,String info_lcbx
             ,String info_jbzd
@@ -130,7 +132,7 @@ public class zgyyxxcxpt_zy {
         this.info_fk=info_fk;
         this.info_dfrq=info_dfrq;
         this.info_fbbw=info_fbbw;
-        this.info_xybm=info_xybm;
+        this.info_zybm=info_zybm;
         this.info_bybj=info_bybj;
         this.info_lcbx=info_lcbx;
         this.info_jbzd=info_jbzd;
@@ -214,14 +216,13 @@ public class zgyyxxcxpt_zy {
         this.info_fbbw = info_fbbw;
     }
 
-    public String getInfo_xybm()
+    public String getInfo_zybm()
     {
-        return info_xybm;
+        return info_zybm;
     }
-
-    public void setInfo_xybm(String info_xybm)
+    public void setInfo_zybm(String info_zybm)
     {
-        this.info_xybm = info_xybm;
+        this.info_zybm = info_zybm;
     }
 
     public String getInfo_bybj()
@@ -263,6 +264,10 @@ public class zgyyxxcxpt_zy {
         this.info_fj = info_fj;
     }
 
+    public void setInfo_yfbj(String info_yfbj) {
+        this.info_yfbj = info_yfbj;
+    }
+
     public String getInfo_zjlf()
     {
         return info_zjlf;
@@ -276,8 +281,8 @@ public class zgyyxxcxpt_zy {
     {
         return info_yfbj;
     }
-
-    public void setInfo_yfbj(String info_yfbj) {
+    public void setId(String info_yfbj)
+    {
         this.info_yfbj = info_yfbj;
     }
 
@@ -368,7 +373,6 @@ public class zgyyxxcxpt_zy {
         this.update_time = update_time;
     }
 
-
     public void replaceStr(ReplaceLabels replaceLabels){
 //        String str1_0=replaceLabels.getStr1_0();
 //        String str1_1=replaceLabels.getStr1_1();
@@ -394,8 +398,7 @@ public class zgyyxxcxpt_zy {
 //        setInfo_yslf(getInfo_yslf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 //        setInfo_ywmc(getInfo_ywmc().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 //        setInfo_zjlf(getInfo_zjlf().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-//        setInfo_xybm(getInfo_xybm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
-
+//        setInfo_zybm(getInfo_zybm().replaceAll("<h1>",str1_0).replaceAll("</h1><br/>",str1_1).replaceAll("<h2>",str2_0).replaceAll("</h2><br/>",str2_1).replaceAll("<!--.*-->", "").replaceAll("<(?=[0-9])","小于"));
 
         setInfo_mcjs(replaceLabels.rep(replaceLabels, getInfo_mcjs()));
         setInfo_bm(replaceLabels.rep(replaceLabels, getInfo_bm()));
@@ -416,6 +419,6 @@ public class zgyyxxcxpt_zy {
         setInfo_yslf(replaceLabels.rep(replaceLabels, getInfo_yslf()));
         setInfo_ywmc(replaceLabels.rep(replaceLabels, getInfo_ywmc()));
         setInfo_zjlf(replaceLabels.rep(replaceLabels, getInfo_zjlf()));
-        setInfo_xybm(replaceLabels.rep(replaceLabels, getInfo_xybm()));
+        setInfo_zybm(replaceLabels.rep(replaceLabels, getInfo_zybm()));
     }
 }

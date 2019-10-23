@@ -1,4 +1,4 @@
-package com.example.demo1.Controller;
+package com.example.demo1.Controller.check_data;
 
 
 import com.example.demo1.Repository.patent.DataAllDrugRepository;

@@ -1,7 +1,7 @@
-package com.example.demo1.Controller;
+package com.example.demo1.Controller.check_data;
 
 
-import com.example.demo1.Repository.DataAllRepository;
+import com.example.demo1.Repository.symptom_zy.DataAllRepository;
 import com.example.demo1.model.PartColums;
 import com.example.demo1.model.disease_and_symptom.data_all;
 import com.example.demo1.service.DataAllService;

@@ -1,4 +1,4 @@
-package com.example.demo1.model;
+package com.example.demo1.model.disease_and_symptom;
 
 import com.example.demo1.functions.ReplaceLabels;
 

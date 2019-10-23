@@ -1,43 +1,43 @@
 //package com.example.demo1.Controller;
 //
-//import com.example.demo1.Repository.UserRepository;
+//import com.example.demo1.Repository.symptom_zy.ZyRepository;
 //import com.example.demo1.functions.ReplaceLabels;
 //import com.example.demo1.model.PartColums;
-//import com.example.demo1.model.User;
-//import com.example.demo1.service.UserServiceImpl.UserServiceImpl;
+//import com.example.demo1.model.disease_and_symptom.zgyyxxcxpt_zy;
 //import com.github.pagehelper.PageHelper;
 //import com.github.pagehelper.PageInfo;
 //import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
 //import org.springframework.data.domain.PageRequest;
 //import org.springframework.data.domain.Sort;
-//import org.springframework.data.jpa.repository.JpaContext;
-//import org.springframework.data.jpa.repository.JpaRepository;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
 //
 //import java.time.LocalDateTime;
 //import java.util.*;
 //
 //@RestController
-//@RequestMapping(path = "/baidu_baike")
+//@RequestMapping(path = "/zgyyxxcxpt_zy")
 //@CrossOrigin
-//public class UserController {
+//public class ZyController {
 //    @Autowired
-//    private UserRepository userRepository;
+//    private ZyRepository zyRepository;
 //
-//    @Autowired
-//    private UserServiceImpl userService;
+//    private Integer rest_status;
 //
 //    @Autowired
 //    private ReplaceLabels replaceLabels;
 //
-//    private Integer rest_status;
+//    @RequestMapping("/add1")
+//    @ResponseBody
+//    public String test(@RequestParam Map<String,Object> map){
+//
+//        String info_mc =  map.get("info_mc").toString();
+//
+//        return "success";
+//    }
 //
 //    @RequestMapping( "/add")
 //    @ResponseBody
-//    public String addNewUser(@RequestParam Integer id
+//    public String addNewData(@RequestParam Integer id
 //            ,@RequestParam String info_mc
 //            ,@RequestParam String info_mcjs
 //            ,@RequestParam String info_bm
@@ -63,7 +63,7 @@
 //            ,@RequestParam LocalDateTime update_time
 //            ,@RequestParam Integer status,@RequestParam String origin_url,@RequestParam String comment)
 //    {
-//        User n = new User(id
+//        zgyyxxcxpt_zy n = new zgyyxxcxpt_zy(id
 //                ,info_mc
 //                ,info_mcjs
 //                ,info_bm
@@ -88,32 +88,32 @@
 //                ,create_time
 //                ,update_time
 //                ,status,origin_url,comment);
-//        userRepository.save(n);
+//        zyRepository.save(n);
 //        return "ok!";
 //    }
 //
 //    /*
-//     * 根据状态和名字查找，并返回User的部分列
-//     * @status:状态
-//     * @name:疾病名称
-//     * */
+//    * 根据状态和名字查找，并返回User的部分列
+//    * @status:状态
+//    * @name:疾病名称
+//    * */
 //    @GetMapping(path = "/getPartList")   @ResponseBody
 //    //@ResponseStatus(code= HttpStatus.SWITCHING_PROTOCOLS,reason = "success")
 //    public Map<String,Object> getPartList(@RequestParam int page,
 //                                          @RequestParam int size,
 //                                          @RequestParam int status,
 //                                          @RequestParam (name = "name", required = false, defaultValue = "")
-//                                                      String name
+//                                                  String name
 //    )
 //    {
 //        PageHelper.startPage(page,size);
 //        Map<String,Object> map = new LinkedHashMap<String,Object>();
 //        Sort sort=new Sort(Sort.DEFAULT_DIRECTION,"id");
 //        PageRequest pageRequest = new PageRequest(page,size,sort);
-////        name='%'+name+'%';
-//        List<PartColums> list=userRepository.findPartList(status,name,pageRequest);
+//        List<PartColums> list=zyRepository.findPartList(status,name,pageRequest);
 //        PageInfo pageInfo=new PageInfo(list);
-//        List<PartColums> list2=userRepository.findPartList(status,name);
+//
+//        List<PartColums> list2=zyRepository.findPartList(status,name);
 //        int totalNum=list2.size();
 //        if (pageInfo.getPageSize()==0){
 //            //该页面是空页面
@@ -133,7 +133,7 @@
 //    public Map<String,Object> findById(@RequestParam Integer id)
 //    {
 //        Map<String,Object> map = new LinkedHashMap<String, Object>();
-//        Optional<User> list= userRepository.findById(id);
+//        Optional<zgyyxxcxpt_zy> list= zyRepository.findById(id);
 //
 //        //替换标签<h1>,<h2>
 //        list.get().replaceStr(replaceLabels);
@@ -155,7 +155,7 @@
 //        Map<String,Object> map = new LinkedHashMap<String, Object>();
 //        Sort sort=new Sort(Sort.DEFAULT_DIRECTION,"id");
 //        PageRequest pageRequest=new PageRequest(page,size,sort);
-//        List<User> list= userRepository.findByName(name,pageRequest);
+//        List<zgyyxxcxpt_zy> list= zyRepository.findByName(name,pageRequest);
 //        PageInfo pageInfo=new PageInfo(list);
 //        if (list.isEmpty()){
 //            map.put("code","404");
@@ -168,17 +168,11 @@
 //        return map;
 //    }
 //
-//    @GetMapping(path = "/getUserList")
-//    @ResponseBody
-//    public Page<User> getList(@RequestParam int page,@RequestParam int size){
-//        return userService.getUserList(page,size);
-//    }
-//
 //    @GetMapping(path = "/updateComment")
 //    @ResponseBody
 //    public Map<String,Object> updateCommentAnfidStatus(@RequestParam Integer id,@RequestParam String comment,@RequestParam int status){
-//        User u=new User(id,comment,status);
-//        int result=userRepository.updateCommentAndStatus(u);
+//        zgyyxxcxpt_zy u=new zgyyxxcxpt_zy(id,comment,status);
+//        int result=zyRepository.updateCommentAndStatus(u);
 //        Map<String,Object> map=new LinkedHashMap<String, Object>();
 //        if(result==1){
 //            map.put("code","200");
@@ -193,7 +187,7 @@
 //    @DeleteMapping(path = "/delete")
 //    public void delete(@RequestParam Integer id)
 //    {
-//        userRepository.deleteById(id);
+//        zyRepository.deleteById(id);
 //    }
 //
 //}
