@@ -41,6 +41,7 @@ public interface DataAllDrugRepository extends JpaRepository<data_all_drug, Inte
             "a.info_ywxhzy = CASE WHEN :#{#u.info_ywxhzy} IS NULL THEN a.info_ywxhzy ELSE :#{#u.info_ywxhzy} END ," +
             "a.info_fl = CASE WHEN :#{#u.info_fl} IS NULL THEN a.info_fl ELSE :#{#u.info_fl} END ," +
             "a.info_zxbz = CASE WHEN :#{#u.info_zxbz} IS NULL THEN a.info_zxbz ELSE :#{#u.info_zxbz} END ," +
+            "a.info_zlkz = CASE WHEN :#{#u.info_zlkz} IS NULL THEN a.info_zlkz ELSE :#{#u.info_zlkz} END ," +
             "a.create_time = CASE WHEN :#{#u.create_time} IS NULL THEN a.create_time ELSE :#{#u.create_time} END ," +
             "a.update_time = CASE WHEN :#{#u.update_time} IS NULL THEN a.update_time ELSE :#{#u.update_time} END ," +
             "a.check_data_time = CASE WHEN :#{#u.check_data_time} IS NULL THEN a.check_data_time ELSE :#{#u.check_data_time} END ," +

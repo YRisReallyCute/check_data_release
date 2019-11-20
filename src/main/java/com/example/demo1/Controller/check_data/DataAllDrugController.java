@@ -64,6 +64,7 @@ public class DataAllDrugController {
             @RequestParam(required = false) String info_ywxhzy,
             @RequestParam(required = false) String info_fl,
             @RequestParam(required = false) String info_zxbz,
+            @RequestParam(required = false) String info_zlkz,
             @RequestParam (required = false) String comment,
             @RequestParam Integer status) {
 
@@ -72,7 +73,7 @@ public class DataAllDrugController {
         data_all_drug dad = new data_all_drug(id,
                 info_ym, info_bm, info_cf, info_zffx, info_gnzz, info_zbff, info_jxgg, info_yfyl, info_zlbz, info_syjj,
                 info_zysx, info_xdyj, info_lcyy, info_fg, info_qtzj, info_zc, info_blfy, info_yldl, info_ywxhzy, info_fl,
-                info_zxbz, status, comment
+                info_zxbz, info_zlkz, status, comment
         );
 
         int result=dataAllDrugReposity.updateCommentAndStatus(dad);

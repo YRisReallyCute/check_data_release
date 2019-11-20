@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>check_data</artifactId>
-    <version>0.0.1</version>
+    <version>1</version>
     <name>check_data</name>
     <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
@@ -64,6 +64,14 @@
             <scope>provided</scope>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-devtools</artifactId>-->
+<!--            &lt;!&ndash; optional=true,依赖不会传递&ndash;&gt;-->
+<!--            <optional>true</optional>-->
+<!--            <scope>true</scope>-->
+<!--        </dependency>-->
+
     </dependencies>
 
     <build>
@@ -71,6 +79,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

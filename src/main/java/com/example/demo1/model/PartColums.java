@@ -1,10 +1,14 @@
 package com.example.demo1.model;
 
 import com.example.demo1.model.disease_and_symptom.data_all;
+import com.example.demo1.model.disease_and_symptom.data_all_symptom_disease_zxy;
 
 public class PartColums {
 //    private Integer rest_status;
     private Integer id;
+
+    private Integer type;
+
     private String info_mc;
     private Integer status;
     private String comment;
@@ -42,6 +46,7 @@ public class PartColums {
     public PartColums(Integer status,Integer symptom_xy_batch,Integer symptom_zy_batch,String name,Integer origin_baike,Integer origin_disease_xy,Integer origin_disease_zy,
                       Integer origin_symptom_xy,Integer origin_symptom_zy,Integer origin_xy,Integer origin_zy,Integer origin_human){
 
+
         this.status=status;
         this.symptom_xy_batch=symptom_xy_batch;
         this.symptom_zy_batch=symptom_zy_batch;
@@ -55,6 +60,82 @@ public class PartColums {
         this.origin_zy=origin_zy;
         this.origin_human=origin_human;
     }
+
+    public PartColums(Integer type,Integer status,Integer symptom_xy_batch,Integer symptom_zy_batch,String name,Integer origin_baike,Integer origin_disease_xy,Integer origin_disease_zy,
+                      Integer origin_symptom_xy,Integer origin_symptom_zy,Integer origin_xy,Integer origin_zy,Integer origin_human){
+
+        this.type=type;
+        this.status=status;
+        this.symptom_xy_batch=symptom_xy_batch;
+        this.symptom_zy_batch=symptom_zy_batch;
+        this.info_mc=name;
+        this.origin_baike=origin_baike;
+        this.origin_disease_xy=origin_disease_xy;
+        this.origin_disease_zy=origin_disease_zy;
+        this.origin_symptom_xy=origin_symptom_xy;
+        this.origin_symptom_zy=origin_symptom_zy;
+        this.origin_xy=origin_xy;
+        this.origin_zy=origin_zy;
+        this.origin_human=origin_human;
+    }
+
+    public PartColums(Integer id, Integer type, String info_mc, Integer status, String comment,
+                      Integer baike,Integer baike_id,Integer baike_auth,Integer disease_xy,Integer disease_xy_id,
+                      Integer disease_zy,Integer disease_zy_id,Integer symptom_xy,Integer symptom_xy_id,Integer symptom_xy_batch,
+                      Integer symptom_zy,Integer symptom_zy_id,Integer symptom_zy_batch,Integer xy,Integer xy_id,Integer zy,Integer zy_id) {
+        this.id = id;
+        this.type=type;
+        this.info_mc = info_mc;
+        this.status = status;
+        this.comment = comment;
+        this.origin_baike=baike;
+        this.baike_id=baike_id;
+        this.baike_auth=baike_auth;
+        this.origin_disease_xy=disease_xy;
+        this.disease_xy_id=disease_xy_id;
+        this.origin_disease_zy=disease_zy;
+        this.disease_zy_id=disease_zy_id;
+        this.origin_symptom_xy=symptom_xy;
+        this.symptom_xy_id=symptom_xy_id;
+        this.symptom_xy_batch=symptom_xy_batch;
+        this.origin_symptom_zy=symptom_zy;
+        this.symptom_zy_id=symptom_zy_id;
+        this.symptom_zy_batch=symptom_zy_batch;
+        this.origin_xy=xy;
+        this.xy_id=xy_id;
+        this.origin_zy=zy;
+        this.zy_id=zy_id;
+    }
+
+    public PartColums(data_all_symptom_disease_zxy da){
+        this.id=da.getId();
+        this.type=da.getType();
+        this.info_mc = da.getInfo_mc();
+        this.status = da.getStatus();
+        this.comment = da.getComment();
+        this.origin_baike=da.getOrigin_baike();
+        this.baike_id=da.getBaike_id();
+        this.baike_auth=da.getBaike_auth();
+        this.origin_disease_xy=da.getOrigin_disease_xy();
+        this.disease_xy_id=da.getDisease_xy_id();
+        this.origin_disease_zy=da.getOrigin_disease_zy();
+        this.disease_zy_id=da.getDisease_zy_id();
+        this.origin_symptom_xy=da.getOrigin_symptom_xy();
+        this.symptom_xy_id=da.getSymptom_xy_id();
+        this.symptom_xy_batch=da.getSymptom_xy_batch();
+        this.origin_symptom_zy=da.getOrigin_symptom_zy();
+        this.symptom_zy_id=da.getSymptom_zy_id();
+        this.symptom_zy_batch=da.getSymptom_zy_batch();
+        this.origin_xy=da.getOrigin_xy();
+        this.xy_id=da.getXy_id();
+        this.origin_zy=da.getOrigin_zy();
+        this.zy_id=da.getZy_id();
+        this.origin_human=da.getOrigin_human();
+        this.human_id=da.getHuman_id();
+    }
+
+
+
 
     public PartColums(Integer id, String info_mc, Integer status, String comment,
                       Integer baike,Integer baike_id,Integer baike_auth,Integer disease_xy,Integer disease_xy_id,
@@ -308,5 +389,13 @@ public class PartColums {
 
     public void setHuman_id(Integer human_id) {
         this.human_id = human_id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

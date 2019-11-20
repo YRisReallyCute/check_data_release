@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,11 +16,16 @@ import java.util.Objects;
 @Component
 @Slf4j
 public class DynamicJob implements Job {
+    private int param_id;
+
+    public void setParam_id(){
+        this.param_id=param_id;
+    }
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         JobDataMap map = jobExecutionContext.getMergedJobDataMap();
 
-        String parameter = map.getString("paramter");
+        String parameter = map.getString("parameter");
         String vmParam = map.getString("vmParam");
         String runPath = map.getString("runPath");
 
@@ -34,6 +40,25 @@ public class DynamicJob implements Job {
         long startTime = System.currentTimeMillis();
         log.info("start time:{} ", startTime);
 
+//        if(!StringUtils.isEmpty(runPath)){
+//            Runtime run = Runtime.getRuntime();
+//            String cmdStr = "scrapy crawl getData -a id=32";
+//            try{
+//                Process process = run.exec(cmdStr);
+//                InputStream in = process.getInputStream();
+//                InputStreamReader reader = new InputStreamReader(in);
+//                BufferedReader br = new BufferedReader(reader);
+//                StringBuffer sb=new StringBuffer();
+//                String message;
+//                while((message=br.readLine())!=null){
+//                    sb.append(message);
+//                }
+//                System.out.println(sb);
+//            }catch (IOException e){
+//                e.printStackTrace();
+//            }
+//        }
+
         //执行体
         if(!StringUtils.isEmpty(runPath)){
             File pyFile = new File(runPath);
@@ -41,16 +66,21 @@ public class DynamicJob implements Job {
                 ProcessBuilder processBuilder = new ProcessBuilder();
                 processBuilder.directory(pyFile.getParentFile());
                 List<String> commands = new ArrayList<>();
-                commands.add("python");
-//                if (!StringUtils.isEmpty(vmParam)) commands.add(vmParam);
-                commands.add(runPath);
-//                if (!StringUtils.isEmpty(parameter)) commands.add(parameter);
+                String iparam="id="+parameter;
+                commands= Arrays.asList("scrapy","crawl","getData","-a",iparam);
+//                String com = "scrapy crawl getData";
                 processBuilder.command(commands);
+                processBuilder.redirectErrorStream(true);
+                processBuilder.inheritIO();
+
                 log.info("Running job details as follows :");
                 log.info("Running job commands :{} ",StringUtil.getListString(commands));
 
                 try{
                     Process process = processBuilder.start();
+                    if(process.isAlive()){
+                        System.out.println("*************alive***************");
+                    }
                     logProcess(process.getInputStream(),process.getErrorStream());
                 }catch (IOException e){
                     throw new JobExecutionException(e);

@@ -1,10 +1,7 @@
 package com.example.demo1.functions;
 
-import com.example.demo1.model.*;
 import org.springframework.stereotype.Component;
 
-import javax.jws.soap.SOAPBinding;
-import java.util.Optional;
 
 @Component
 public class ReplaceLabels {
@@ -47,8 +44,8 @@ public class ReplaceLabels {
         return strToReplace
                 .replaceAll("<br />", "<br/>")
                 .replaceAll("<!--.*-->", "")
-                .replaceAll("<(?!(h1>)|(/h1>)|(p>)|(/p>)|(br/>)|(span>)|(/span>))","小于") // 非标签的 < 更换为 小于
-                .replaceAll("(?<!(<h1)|(</h1)|(<p)|</p|(<br/)|(<span)|(/span))>","大于")  // 非标签的 > 更换为 大于
+                .replaceAll("<(?!(h1>)|(/h1>)|(h1)|(h2>)|(/h2>)|(h2)|(p>)|(/p>)|(p)|(br/>)|(span>)|(/span>)|(span)|(div>)|(/div>)|(div)|(br)|(a>)|(/a>)|(a))","小于") // 非标签的 < 更换为 小于
+                .replaceAll("(?<!(<h1)|(</h1)|(<h2)|(</h2)|(<p)|</p|(<br/)|(<span)|(/span)|(<div)|(</div)|(a>)|(/a>)|(a)|(div)|(\"))>","大于")  // 非标签的 > 更换为 大于
                 .replaceAll("<h1>",str1_0)
                 .replaceAll("(</h1><br/>)|(</h1>)",str1_1)
                 .replaceAll("<h2>",str2_0)

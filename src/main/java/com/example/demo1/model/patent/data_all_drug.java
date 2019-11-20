@@ -99,6 +99,10 @@ public class data_all_drug {
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_zxbz; // 执行标准
 
+    @Lob
+    @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+    private String info_zlkz;// 质量控制
+
 //    @Column(nullable = false)
 //    private String origin_url; // 链接
 
@@ -137,7 +141,7 @@ public class data_all_drug {
     public data_all_drug() {
     }
 
-    public data_all_drug(Integer id, String info_ym, String info_bm, String info_cf, String info_zffx, String info_gnzz, String info_zbff, String info_jxgg, String info_yfyl, String info_zlbz, String info_syjj, String info_zysx, String info_xdyj, String info_lcyy, String info_fg, String info_qtzj, String info_zc, String info_blfy, String info_yldl, String info_ywxhzy, String info_fl, String info_zxbz, Integer status, String comment) {
+    public data_all_drug(Integer id, String info_ym, String info_bm, String info_cf, String info_zffx, String info_gnzz, String info_zbff, String info_jxgg, String info_yfyl, String info_zlbz, String info_syjj, String info_zysx, String info_xdyj, String info_lcyy, String info_fg, String info_qtzj, String info_zc, String info_blfy, String info_yldl, String info_ywxhzy, String info_fl, String info_zxbz,String info_zlkz,Integer status, String comment) {
         this.id = id;
         this.info_ym = info_ym;
         this.info_bm = info_bm;
@@ -160,6 +164,7 @@ public class data_all_drug {
         this.info_ywxhzy = info_ywxhzy;
         this.info_fl = info_fl;
         this.info_zxbz = info_zxbz;
+        this.info_zlkz=info_zlkz;
         this.status = status;
         this.comment = comment;
     }
@@ -174,6 +179,14 @@ public class data_all_drug {
 
     public String getInfo_ym() {
         return info_ym;
+    }
+
+    public String getInfo_zlkz() {
+        return info_zlkz;
+    }
+
+    public void setInfo_zlkz(String info_zlkz) {
+        this.info_zlkz = info_zlkz;
     }
 
     public void setInfo_ym(String info_ym) {

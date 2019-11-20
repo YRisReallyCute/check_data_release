@@ -25,8 +25,10 @@ public interface UserRepository  extends JpaRepository<User,Integer> , PagingAnd
     List<PartColums> findPartList(int status,String info_mc,PageRequest pageRequest);
 
     @Transactional
-    @Query(value = "select * from data_baidu_baike where info_mc like CONCAT('%',?1,'%')",nativeQuery = true)
-    List<User> findByName(String name,PageRequest pageRequest);
+    @Query(value = "select * from data_symptom_zy_baidubaike where info_mc =?1)",nativeQuery = true)
+    List<User> findByName(String name);
+
+
 
     @Modifying
     @Transactional

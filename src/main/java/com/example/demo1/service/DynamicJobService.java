@@ -23,7 +23,10 @@ public class DynamicJobService {
 
     public List<JobEntity> loadJobs(){return jobEntityRepository.findAll();}
 
-    public int updateParam(int id,String conf){return jobEntityRepository.updataParam(id,conf);}
+    public JobEntity updateParam(int id,JobEntity job){
+        job.setParameter(String.valueOf(id));
+        return job;
+    }
 
     //获取 JobDataMap
     public JobDataMap getJobDataMap(JobEntity job){
@@ -34,7 +37,7 @@ public class DynamicJobService {
         map.put("parameter", job.getParameter());
         map.put("jobDescription", job.getDescription());
         map.put("vmParam", job.getVmParam());
-        map.put("jarPath", job.getRunPath());
+        map.put("runPath", job.getRunPath());
         map.put("status", job.getStatus());
         map.put("startTime",job.getStartTime());
         return map;

@@ -40,6 +40,7 @@ public interface DataAllRepository extends JpaRepository<data_all,Integer>, Pagi
 //    @Query("select new com.example.demo1.model.PartColums(t.id,t.info_mc,t.status,t.comment,t.origin_baike,t.baike_id,t.origin_disease_xy,t.disease_xy_id,t.origin_disease_zy,t.disease_zy_id,t.origin_symptom_xy,t.symptom_xy_id,t.symptom_xy_batch,t.origin_symptom_zy,t.symptom_zy_id,t.symptom_zy_batch,t.origin_xy,t.xy_id,t.origin_zy,t.zy_id) from data_all t where t.info_mc like CONCAT('%',?2,'%')  and t.status=?1 and t.origin_xy=1")
 //    List<PartColums> findPartListXy(int status, String info_mc, PageRequest pageRequest);
 
+
     @Transactional
 //    @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT('%',?1,'%')",nativeQuery = true)
     @Query(value = "select * from data_all_symptom_zy where info_mc like CONCAT(?1)",nativeQuery = true)

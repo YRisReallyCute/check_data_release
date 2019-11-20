@@ -29,4 +29,7 @@ public interface JobEntityRepository extends JpaRepository<JobEntity,Integer> {
     @Query(value = "update data_job_entity set vm_param = ?2 where id = ?1",nativeQuery = true)
     int updataParam(int id,String conf);
 
+    @Query(value = "select job_group from data_job_entity GROUP BY job_group",nativeQuery = true)
+    List<String> getDbName();
+
 }
