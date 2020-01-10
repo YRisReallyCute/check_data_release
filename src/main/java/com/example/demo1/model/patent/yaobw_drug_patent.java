@@ -11,8 +11,7 @@ public class yaobw_drug_patent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column
-    private String info_ym;
+    @Column private String info_ym;
 
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
@@ -44,7 +43,7 @@ public class yaobw_drug_patent {
 
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
-    private String info_zlkz;
+    private String info_zlbz;
 
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
@@ -74,6 +73,10 @@ public class yaobw_drug_patent {
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_lj;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+    private String info_qt;
 
     @Column
     private String origin_url;
@@ -158,12 +161,12 @@ public class yaobw_drug_patent {
         this.info_yfyl = info_yfyl;
     }
 
-    public String getInfo_zlkz() {
-        return info_zlkz;
+    public String getInfo_zlbz() {
+        return info_zlbz;
     }
 
-    public void setInfo_zlkz(String info_zlkz) {
-        this.info_zlkz = info_zlkz;
+    public void setInfo_zlbz(String info_zlbz) {
+        this.info_zlbz = info_zlbz;
     }
 
     public String getInfo_zysx() {
@@ -246,5 +249,11 @@ public class yaobw_drug_patent {
         this.origin_body = origin_body;
     }
 
+    public String getInfo_qt() {
+        return info_qt;
+    }
 
+    public void setInfo_qt(String info_qt) {
+        this.info_qt = info_qt;
+    }
 }

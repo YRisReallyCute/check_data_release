@@ -1,6 +1,7 @@
 package com.example.demo1.Controller.job;
 
 import com.example.demo1.model.jobEntity.JobEntity;
+import com.example.demo1.repository.job.JobEntityRepository;
 import com.example.demo1.service.DynamicJobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,6 +26,21 @@ public class JobEntityController {
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
+
+    @Autowired
+    private JobEntityRepository jobEntityRepository;
+
+    @GetMapping("/conf/get_dbname")
+    private Map<String,Object> getDbname(){
+        Map<String,Object> map=new LinkedHashMap<>();
+        List<JobEntity> listZxy= jobEntityRepository.getSymptomZyGroup();
+        List<JobEntity>listPatent=jobEntityRepository.getPatentGroup();
+        List<JobEntity>listHerbal=jobEntityRepository.getHerbalyGroup();
+        map.put("zxy",listZxy);
+        map.put("patent",listPatent);
+        map.put("herbal",listHerbal);
+        return map;
+    }
 
     @GetMapping("/test/job")
     private String testJob(){
@@ -44,14 +61,14 @@ public class JobEntityController {
 //        }
     }
 
-    private String assiginTask(int id,int job_id) throws SchedulerException {
+    private String assiginTask(int id,int task_id) throws SchedulerException {
         String result;
         JobEntity entity = jobService.getJobEntityById(id);
         //设置上下文参数
-        entity=jobService.updateParam(job_id,entity);
+        entity=jobService.updateParam(task_id,entity);
         if(Objects.isNull(entity)) return "error: id is not exits ";
         synchronized (log){
-            JobKey jobKey = jobService.getJobKey(entity);
+            JobKey jobKey = jobService.getJobKey(entity,task_id);
             Scheduler scheduler = schedulerFactoryBean.getScheduler();
             scheduler.pauseJob(jobKey);
             scheduler.unscheduleJob(TriggerKey.triggerKey(jobKey.getName(),jobKey.getGroup()));

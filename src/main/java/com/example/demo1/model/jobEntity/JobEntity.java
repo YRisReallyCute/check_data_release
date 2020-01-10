@@ -23,4 +23,6 @@ public class JobEntity {
     private String startTime;
     private String status;
     private int totalNum;
+
+    public JobEntity(){}
 }

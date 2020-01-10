@@ -1,9 +1,7 @@
 package com.example.demo1.service;
 
-import com.example.demo1.Repository.symptom_zy.DataAllRepository;
-import com.example.demo1.Repository.symptom_zy.DataAllSymptomDiseaseZxyRepository;
+import com.example.demo1.repository.symptom_zy.DataAllSymptomDiseaseZxyRepository;
 import com.example.demo1.model.PartColums;
-import com.example.demo1.model.disease_and_symptom.User;
 import com.example.demo1.model.disease_and_symptom.data_all_symptom_disease_zxy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -71,7 +69,7 @@ public class DataAllZxyService {
                     predicates.add(criteriaBuilder.equal(root.get("origin_zy").as(Integer.class),partColums.getOrigin_zy()));
                 }
 
-                if(partColums.getStatus()!=null){
+                if(partColums.getStatus()!=-1){
                     //状态
                     predicatesAnd.add(criteriaBuilder.equal(root.get("status").as(Integer.class),partColums.getStatus()));
                 }

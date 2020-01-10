@@ -1,8 +1,8 @@
 package com.example.demo1.service;
 
-import com.example.demo1.Repository.patent.DataAllDrugRepository;
+import com.example.demo1.repository.patent.DataAllDrugPatentRepository;
 import com.example.demo1.model.patent.PartColumsPatent;
-import com.example.demo1.model.patent.data_all_drug;
+import com.example.demo1.model.patent.data_all_drug_patent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.*;
 public class DataAllDrugPatentService {
 
     @Autowired
-    private DataAllDrugRepository dataAllDrugRepository;
+    private DataAllDrugPatentRepository dataAllDrugPatentRepository;
 
     public Map<String,Object> getPartList(PartColumsPatent partColumsPatent, int page, int size){
         /**root：要查询的类型
@@ -25,9 +25,9 @@ public class DataAllDrugPatentService {
          * cb：构建条件
          * specification：作为一个匿名内部类
          */
-        Specification<data_all_drug> specification=new Specification<data_all_drug>() {
+        Specification<data_all_drug_patent> specification=new Specification<data_all_drug_patent>() {
             @Override
-            public Predicate toPredicate(Root<data_all_drug> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+            public Predicate toPredicate(Root<data_all_drug_patent> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
 
                 List<Predicate> predicates=new ArrayList<Predicate>();
                 List<Predicate> predicatesAnd=new ArrayList<>();
@@ -46,7 +46,7 @@ public class DataAllDrugPatentService {
                     predicates.add(criteriaBuilder.equal(root.get("origin_zyybd").as(Integer.class),partColumsPatent.getOrigin_zyybd()));
                 }
 
-                if(partColumsPatent.getStatus()!=null){
+                if(partColumsPatent.getStatus()!=-1){
                     //状态
                     predicatesAnd.add(criteriaBuilder.equal(root.get("status").as(Integer.class),partColumsPatent.getStatus()));
                 }
@@ -72,7 +72,7 @@ public class DataAllDrugPatentService {
 
         Map<String,Object> map = new LinkedHashMap<>();
 
-        List<data_all_drug> list= dataAllDrugRepository.findAll(specification);
+        List<data_all_drug_patent> list= dataAllDrugPatentRepository.findAll(specification);
         map.put("totalNum",list.size());
 
         List<PartColumsPatent> list2=new LinkedList<>();

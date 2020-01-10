@@ -1,9 +1,16 @@
 package com.example.demo1.Controller.check_data;
 
 
-import com.example.demo1.Repository.patent.YaobwDrugPatentRepository;
-import com.example.demo1.Repository.patent.ZyybdAppDrugRepository;
-import com.example.demo1.Repository.symptom_zy.*;
+import com.example.demo1.model.herbal.HerbalYaobw;
+import com.example.demo1.model.herbal.HerbalZyybdApp;
+import com.example.demo1.model.patent.PatentBaidubaike;
+import com.example.demo1.repository.herbal.HerbalYaobwRepository;
+import com.example.demo1.repository.herbal.HerbalZyybdAppRepository;
+import com.example.demo1.repository.patent.PatentBaidubaikeRepository;
+import com.example.demo1.repository.patent.YaobwDrugPatentRepository;
+import com.example.demo1.repository.patent.ZyybdAppDrugRepository;
+import com.example.demo1.model.patent.PatentBaidubaike;
+import com.example.demo1.repository.symptom_zy.*;
 import com.example.demo1.functions.ReplaceLabels;
 import com.example.demo1.model.disease_and_symptom.*;
 import com.example.demo1.model.patent.yaobw_drug_patent;
@@ -61,8 +68,22 @@ public class findByIdController {
     private final
     ZyybdAppDrugRepository zyybdAppDrugRepository;
 
+    private final
+    PatentBaidubaikeRepository patentBaidubaikeRepository;
+
+    private final HerbalYaobwRepository herbalYaobwRepository;
+
+    private final HerbalZyybdAppRepository herbalZyybdAppRepository;
+
     @Autowired
-    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository, DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository, SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository, BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository, BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository, YaobwDrugPatentRepository yaobwDrugPatentRepository, ZyybdAppDrugRepository zyybdAppDrugRepository) {
+    public findByIdController(XyRepository xyRepository, UserRepository userRepository, ZyRepository zyRepository,
+                              DiseaseXyRepository diseaseXyRepository, DiseaseZyRepository diseaseZyRepository,
+                              SymptomXyRepository symptomXyRepository, SymptomZyRepository symptomZyRepository,
+                              BaikeDiseaseXyRepository baikeDiseaseXyRepository, BaikeDiseaseZyRepository baikeDiseaseZyRepository,
+                              BaikeSymptomXyRepository baikeSymptomXyRepository, ReplaceLabels replaceLabels, HumanSymptomZyRepository humanSymptomZyRepository,
+                              YaobwDrugPatentRepository yaobwDrugPatentRepository, ZyybdAppDrugRepository zyybdAppDrugRepository,PatentBaidubaikeRepository patentBaidubaikeRepository,
+                              HerbalYaobwRepository herbalYaobwRepository,HerbalZyybdAppRepository herbalZyybdAppRepository
+    ) {
         this.xyRepository = xyRepository;
         this.userRepository = userRepository;
         this.zyRepository = zyRepository;
@@ -77,6 +98,9 @@ public class findByIdController {
         this.humanSymptomZyRepository = humanSymptomZyRepository;
         this.yaobwDrugPatentRepository = yaobwDrugPatentRepository;
         this.zyybdAppDrugRepository = zyybdAppDrugRepository;
+        this.patentBaidubaikeRepository=patentBaidubaikeRepository;
+        this.herbalYaobwRepository=herbalYaobwRepository;
+        this.herbalZyybdAppRepository=herbalZyybdAppRepository;
     }
 
 
@@ -256,7 +280,6 @@ public class findByIdController {
         list.get().replaceStr(replaceLabels);
 
 //        Optional<disease_xy> list2=Optional.of(list.get());
-
         if (!list.isPresent()){
             map.put("code","404");
         }
@@ -411,5 +434,69 @@ public class findByIdController {
         }
         return map;
     }
+
+    /*
+     * 14
+     * model: patentBaidubaike
+     * repository: patentBaidubaikeRepository
+     * table: data_patent_baidubaike
+     */
+    @GetMapping("drug_patent_baidubaike/findById")
+    public Map<String,Object> drugPatentBaidubaike(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<PatentBaidubaike> list= patentBaidubaikeRepository.findById(id);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+    /*
+     * 15
+     * model: data_drug_patent_yaobw
+     * repository: yaobwDrugPatentRepository
+     * table: data_patent_yaobw
+     */
+    @GetMapping("drug_herbal_yaobw/findById")
+    public Map<String,Object> drugHerbalYaobw(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<HerbalYaobw> list=herbalYaobwRepository.findById(id);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
+    /*
+     * 13
+     * model: data_drug_patent_yaobw
+     * repository: yaobwDrugPatentRepository
+     * table: data_patent_yaobw
+     */
+    @GetMapping("drug_herbal_zyybdApp/findById")
+    public Map<String,Object> drugHerbalZyybdApp(@RequestParam Integer id){
+        Map<String,Object> map = new LinkedHashMap<String, Object>();
+        Optional<HerbalZyybdApp> list= herbalZyybdAppRepository.findById(id);
+
+        if (!list.isPresent()){
+            map.put("code","404");
+        }
+        else {
+            map.put("code", "200");
+            map.put("result", list);
+        }
+        return map;
+    }
+
 
 }

@@ -169,6 +169,12 @@ public class data_all_symptom_disease_zxy {
         this.origin_symptom_zy=origin_symptom_zy;
     }
 
+    public data_all_symptom_disease_zxy(String info_mc,int type,int status){
+        this.info_mc=info_mc;
+        this.type=type;
+        this.status=status;
+    }
+
     public data_all_symptom_disease_zxy(Integer id,
                                         Integer type
             , String info_mc

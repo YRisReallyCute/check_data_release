@@ -1,14 +1,12 @@
 package com.example.demo1.Controller.check_data;
 
-import com.example.demo1.Repository.symptom_zy.DataAllSymptomDiseaseZxyRepository;
+import com.example.demo1.repository.symptom_zy.DataAllSymptomDiseaseZxyRepository;
 import com.example.demo1.model.PartColums;
-import com.example.demo1.model.disease_and_symptom.data_all;
 import com.example.demo1.model.disease_and_symptom.data_all_symptom_disease_zxy;
 import com.example.demo1.service.DataAllZxyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -28,7 +26,7 @@ public class DataAllZxyController {
     //@ResponseStatus(code= HttpStatus.SWITCHING_PROTOCOLS,reason = "success")
     public Map<String,Object> getPartList(@RequestParam int page,
                                           @RequestParam int size,
-                                          @RequestParam int status,
+                                          @RequestParam (name = "status",required = false,defaultValue = "-1")int status,
                                           @RequestParam int type,
                                           @RequestParam (name = "name", required = false, defaultValue = "") String name,
                                           @RequestParam (name = "origin_type",required = false,defaultValue = "")String origin_type,
@@ -165,6 +163,13 @@ public class DataAllZxyController {
             map.put("code","400");
         }
         return map;
+    }
 
+    @GetMapping("/deleteById")
+    private Map<String,Object> deleteById(@RequestParam int id){
+        Map<String, Object> map=new LinkedHashMap<>();
+        dataAllSymptomDiseaseZxyRepository.deleteById(id);
+        map.put("code","200");
+        return map;
     }
 }

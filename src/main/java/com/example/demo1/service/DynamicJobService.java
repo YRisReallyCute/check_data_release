@@ -1,16 +1,13 @@
 package com.example.demo1.service;
 
-import com.example.demo1.Repository.job.JobEntityRepository;
+import com.example.demo1.repository.job.JobEntityRepository;
 import com.example.demo1.model.job.DynamicJob;
 import com.example.demo1.model.jobEntity.JobEntity;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-
-import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 
 @Service
 public class DynamicJobService {
@@ -61,8 +58,14 @@ public class DynamicJobService {
                     .build();
         }
 
+        //改写，获取jobName+jobGroup以及现在执行的任务id
+        //获取JobKey,包含Name和Group
+        public JobKey getJobKey(JobEntity job,int task_id) {
+            return JobKey.jobKey(job.getName()+job.getJobGroup(),String.valueOf(task_id));
+        }
+
         //获取JobKey,包含Name和Group
         public JobKey getJobKey(JobEntity job) {
-            return JobKey.jobKey(job.getName(), job.getJobGroup());
+            return JobKey.jobKey(job.getName(),job.getJobGroup());
         }
 }

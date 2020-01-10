@@ -98,6 +98,9 @@ public class zyybdApp_patent {
     @Column()
     private LocalDateTime create_time; // 创建时间
 
+    @Column()
+    private LocalDateTime update_time; // 创建时间
+
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String origin_body;
@@ -105,6 +108,10 @@ public class zyybdApp_patent {
     @Lob
     @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
     private String info_lj;
+
+    @Lob
+    @Basic(fetch = FetchType.LAZY) @Column(columnDefinition = "text")
+    private String info_qt;
 
     public zyybdApp_patent(){
 
@@ -316,5 +323,13 @@ public class zyybdApp_patent {
 
     public void setInfo_lj(String info_lj) {
         this.info_lj = info_lj;
+    }
+
+    public String getInfo_qt() {
+        return info_qt;
+    }
+
+    public void setInfo_qt(String info_qt) {
+        this.info_qt = info_qt;
     }
 }

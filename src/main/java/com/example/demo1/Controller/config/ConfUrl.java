@@ -1,6 +1,6 @@
 package com.example.demo1.Controller.config;
 
-import com.example.demo1.Repository.config.ConfSymZyBaikeUrlRepository;
+import com.example.demo1.repository.config.ConfSymZyBaikeUrlRepository;
 import com.example.demo1.model.config.conf_symptom_zy_baidubaike_url;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

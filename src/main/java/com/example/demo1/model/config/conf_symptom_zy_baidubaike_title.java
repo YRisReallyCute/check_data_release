@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "data_conf_symptom_zy_baidubaike_title")
 public class conf_symptom_zy_baidubaike_title {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 255)
@@ -19,6 +19,9 @@ public class conf_symptom_zy_baidubaike_title {
     @Column(nullable = false)
     private Integer status;
 
+    @Column(nullable = false)
+    private String name;
+
     @Column(nullable = true)
     private LocalDateTime update_time;
 
@@ -26,9 +29,18 @@ public class conf_symptom_zy_baidubaike_title {
 
     }
 
-    public conf_symptom_zy_baidubaike_title(String title,String col){
+    public conf_symptom_zy_baidubaike_title(String title,String col,String name){
         this.setTitle(title);
         this.setCol(col);
+        this.setName(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getId() {

@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 @Table(name = "data_conf_symptom_zy_baidubaike_url")
 public class conf_symptom_zy_baidubaike_url {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(nullable = false, length = 255)
