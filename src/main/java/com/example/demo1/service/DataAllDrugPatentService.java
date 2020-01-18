@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.servlet.http.Part;
 import java.util.*;
 
 @Service
@@ -18,6 +19,45 @@ public class DataAllDrugPatentService {
 
     @Autowired
     private DataAllDrugPatentRepository dataAllDrugPatentRepository;
+
+    public List<data_all_drug_patent> getAllByName(PartColumsPatent partColumsPatent){
+        Specification<data_all_drug_patent> specification=new Specification<data_all_drug_patent>() {
+            @Override
+            public Predicate toPredicate(Root<data_all_drug_patent> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+                List<Predicate> predicates=new ArrayList<Predicate>();
+                List<Predicate> predicatesAnd=new ArrayList<>();
+
+                /**cb.equal()相当于判断后面两个参数是否一致
+                 * root相当于实体类的一个路径，使用get可以获取到我们要的字段
+                 *  此处字段类型都是Integer，所以使用as(Integer.class)
+                 * 第二个为前台传过来的参数
+                 * 这句话相当于 数据库字段“origin_naike”= 传过来的参数
+                 */
+
+                if(partColumsPatent.getStatus()!=-1){
+                    //状态
+                    predicatesAnd.add(criteriaBuilder.equal(root.get("status").as(Integer.class),partColumsPatent.getStatus()));
+                }
+
+                if(partColumsPatent.getInfo_ym()!=null){
+                    //这里相当于数据库字段 name like %前台传过来的值%
+                    predicatesAnd.add(criteriaBuilder.like(root.get("info_ym"),"%"+partColumsPatent.getInfo_ym()+"%"));
+                }
+
+                //根据id排序
+                criteriaQuery.orderBy(criteriaBuilder.asc(root.get("id")));
+
+                //组合and查询条件
+                Predicate predicateAND=criteriaBuilder.and(predicatesAnd.toArray(new Predicate[predicatesAnd.size()]));
+
+                //将上面拼接好的条件返回，将作为SQL语句中的where部分【注意是Arry类型】
+                return criteriaQuery.where(predicateAND).getRestriction();
+            }
+        };
+        List<data_all_drug_patent> list= dataAllDrugPatentRepository.findAll(specification);
+        return list;
+    }
 
     public Map<String,Object> getPartList(PartColumsPatent partColumsPatent, int page, int size){
         /**root：要查询的类型

@@ -32,6 +32,12 @@ public class PartColumsPatent {
         this.origin_baike=origin_baike;
     }
 
+    //allController用到
+    public PartColumsPatent(Integer status, String info_ym) {
+        this.status = status;
+        this.info_ym = info_ym;
+    }
+
 
     public PartColumsPatent(data_all_drug_patent da){
         this.id=da.getId();

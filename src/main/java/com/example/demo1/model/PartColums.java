@@ -79,6 +79,14 @@ public class PartColums {
         this.origin_human=origin_human;
     }
 
+    //allController中用到
+    public PartColums(Integer type,Integer status,String name){
+        if(type!=-1){
+        this.type=type;}
+        this.status=status;
+        this.info_mc=name;
+    }
+
     public PartColums(Integer id, Integer type, String info_mc, Integer status, String comment,
                       Integer baike,Integer baike_id,Integer baike_auth,Integer disease_xy,Integer disease_xy_id,
                       Integer disease_zy,Integer disease_zy_id,Integer symptom_xy,Integer symptom_xy_id,Integer symptom_xy_batch,

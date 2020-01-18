@@ -34,6 +34,12 @@ public class PartColumsHerbal {
         this.origin_baike=origin_baike;
     }
 
+    //allController用到
+    public PartColumsHerbal(Integer status, String info_ym) {
+        this.status = status;
+        this.info_ym = info_ym;
+    }
+
 
     public PartColumsHerbal(HerbalDataAll da){
         this.id=da.getId();

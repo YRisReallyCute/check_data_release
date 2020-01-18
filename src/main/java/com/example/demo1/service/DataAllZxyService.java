@@ -16,6 +16,47 @@ public class DataAllZxyService {
     @Autowired
     private DataAllSymptomDiseaseZxyRepository dataAllRepository;
 
+    public List<data_all_symptom_disease_zxy> getAllByName(PartColums partColums){
+        Specification<data_all_symptom_disease_zxy> specification=new Specification<data_all_symptom_disease_zxy>() {
+            @Override
+            public Predicate toPredicate(Root<data_all_symptom_disease_zxy> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+
+                List<Predicate> predicates=new ArrayList<Predicate>();
+                List<Predicate> predicatesAnd=new ArrayList<>();
+
+                /**cb.equal()相当于判断后面两个参数是否一致
+                 * root相当于实体类的一个路径，使用get可以获取到我们要的字段
+                 *  此处字段类型都是Integer，所以使用as(Integer.class)
+                 * 第二个为前台传过来的参数
+                 * 这句话相当于 数据库字段“origin_naike”= 传过来的参数
+                 */
+
+                if(partColums.getStatus()!=-1){
+                    //状态
+                    predicatesAnd.add(criteriaBuilder.equal(root.get("status").as(Integer.class),partColums.getStatus()));
+                }
+
+                if(partColums.getType()!=null){
+                    predicatesAnd.add(criteriaBuilder.equal(root.get("type").as(Integer.class),partColums.getType()));
+                }
+
+                if(partColums.getInfo_mc()!=null){
+                    //这里相当于数据库字段 name like %前台传过来的值%
+                    predicatesAnd.add(criteriaBuilder.like(root.get("info_mc"),"%"+partColums.getInfo_mc()+"%"));
+                }
+
+                //根据id倒序排序
+                criteriaQuery.orderBy(criteriaBuilder.asc(root.get("id")));
+
+                //组合and查询条件
+                Predicate predicateAND=criteriaBuilder.and(predicatesAnd.toArray(new Predicate[predicatesAnd.size()]));
+                return criteriaQuery.where(predicateAND).getRestriction();
+            }
+        };
+        List<data_all_symptom_disease_zxy> list1= dataAllRepository.findAll(specification);
+        return list1;
+    }
+
     public Map<String,Object> getPartList(PartColums partColums, int page, int size){
         /**root：要查询的类型
          * query：添加查询条件
