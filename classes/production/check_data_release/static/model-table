@@ -1,0 +1,12 @@
+model               table
+data_all            data_all_symptom_zy
+baike_symptom_xy    data_symptom_xy_baidubaike
+User                data_symptom_zy_baidubaike
+baike_disease_xy    data_disease_xy_baidubaike
+baike_disease_zy    data_disease_zy_baidubaike
+disease_xy          data_disease_xy_zgyyxxcxpt
+disease_zy          data_disease_zy_zgyyxxcxpt
+symptom_xy          data_symptom_xy_zgyyxxcxpt
+symptom_zy          data_symptom_zy_zgyyxxcxpt
+zgyyxxcxpt_xy       data_disease_xy_zgyyxxcxpt_old
+zgyyxxcxpt_zy       data_disease_xy_zgyyxxcxpt_old

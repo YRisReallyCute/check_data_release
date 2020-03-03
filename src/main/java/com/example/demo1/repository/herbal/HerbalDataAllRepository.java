@@ -24,6 +24,10 @@ public interface HerbalDataAllRepository extends JpaRepository<HerbalDataAll,Int
     @Query(value = "select * from data_all_drug_herbal where info_ym like CONCAT('%',?1,'%')",nativeQuery = true)
     List<HerbalDataAll> findByName(String name);
 
+    @Transactional
+    @Query(value = "select * from data_all_drug_herbal where info_ym like ?1",nativeQuery = true)
+    HerbalDataAll findAllByName(String name);
+
     @Modifying
     @Transactional
     @Query(value = "update HerbalDataAll a set " +

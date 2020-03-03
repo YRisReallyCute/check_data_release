@@ -30,7 +30,6 @@ public class DataAllHerbalController {
 
     @GetMapping("/findById")
     public Map<String , Object> findById(@RequestParam Integer id){
-
         Map<String, Object> map = new HashMap<>();
         Optional<HerbalDataAll> r = herbalDataAllRepository.findById(id);
         if(r.isPresent()){
@@ -39,6 +38,20 @@ public class DataAllHerbalController {
         }else{
             map.put("code", "404");
             map.put("msg", "没有结果");
+        }
+        return map;
+    }
+
+    @GetMapping("/findByName")
+    public Map<String,Object> findByName(@RequestParam String name){
+        Map<String,Object> map=new LinkedHashMap<>();
+        HerbalDataAll h=herbalDataAllRepository.findAllByName(name);
+        if(h!=null){
+            map.put("code","200");
+            map.put("result",h);
+        }
+        else{
+            map.put("code","404");
         }
         return map;
     }

@@ -51,6 +51,7 @@
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
@@ -62,6 +63,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
