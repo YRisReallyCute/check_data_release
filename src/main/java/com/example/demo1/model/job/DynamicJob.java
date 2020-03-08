@@ -26,7 +26,7 @@ public class DynamicJob implements Job {
         JobDataMap map = jobExecutionContext.getMergedJobDataMap();
 
         String parameter = map.getString("parameter");
-        String vmParam = map.getString("vmParam");
+        String url = map.getString("vmParam");
         String runPath = map.getString("runPath");
 
         //日志
@@ -36,7 +36,6 @@ public class DynamicJob implements Job {
         log.info("Running Job path : {} ", runPath);
         log.info(String.format("Running Job cron : %s", map.getString("cronExpression")));
         log.info("Running Job parameter : {} ", parameter);
-        log.info("Running Job vmParam : {} ", vmParam);
         long startTime = System.currentTimeMillis();
         log.info("start time:{} ", startTime);
 
@@ -66,8 +65,9 @@ public class DynamicJob implements Job {
                 ProcessBuilder processBuilder = new ProcessBuilder();
                 processBuilder.directory(pyFile.getParentFile());
                 List<String> commands = new ArrayList<>();
-                String iparam="id="+parameter;
-                commands= Arrays.asList("scrapy","crawl","getData","-a",iparam);
+                String idparam="id="+parameter;
+                String refreshURL="refreshURL="+url;
+                commands= Arrays.asList("scrapy","crawl","getData","-a",idparam);
 //                String com = "scrapy crawl getData";
                 processBuilder.command(commands);
                 processBuilder.redirectErrorStream(true);

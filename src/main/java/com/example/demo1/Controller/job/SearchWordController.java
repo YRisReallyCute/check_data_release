@@ -4,6 +4,7 @@ import com.example.demo1.model.patent.data_all_drug_patent;
 import com.example.demo1.repository.job.JobEntityRepository;
 import com.example.demo1.repository.job.SearchContentRepository;
 import com.example.demo1.repository.patent.DataAllDrugPatentRepository;
+import com.example.demo1.repository.patent.PatentBaidubaikeRepository;
 import com.example.demo1.repository.patent.YaobwDrugPatentRepository;
 import com.example.demo1.repository.patent.ZyybdAppDrugRepository;
 import com.example.demo1.repository.symptom_zy.*;
@@ -60,10 +61,15 @@ public class SearchWordController {
     private YaobwDrugPatentRepository yaobwDrugPatentRepository;
     @Autowired
     private ZyybdAppDrugRepository zyybdAppDrugRepository;
+    @Autowired
+    private PatentBaidubaikeRepository patentBaidubaikeRepository;
 
     public int DZY=1,DXY=2,SZY=3,SXY=4;
 
     public int dirtyStatus=4;
+
+    private String diseaseUrl,patentUrl,herbalUrl;
+    private String baseBaikeUrl="https://baike.baidu.com/item/";
 
 
     @GetMapping("/conf/crawler_info_findall")
@@ -103,12 +109,13 @@ public class SearchWordController {
     }
 
     @GetMapping("/conf/refresh_task")
-    private Map<String,Object> refreshTask(@RequestParam String word,@RequestParam int jobId,@RequestParam int status,@RequestParam int originId,@RequestParam int type){
+    private Map<String,Object> refreshTask(@RequestParam String word,@RequestParam int jobId,@RequestParam int status,@RequestParam int originId,@RequestParam int type,@RequestParam(required = true,defaultValue = "null") String refreshUrl){
         word=word.trim();
         Map<String,Object> map=new LinkedHashMap<>();
         Date dt=new Date();
         try {
             if(jobId==1){
+                //百度百科
                 SearchContent searchContent = new SearchContent(word, jobId, status, "",dt,type2ch(type));
                 searchContentRepository.saveAndFlush(searchContent);
 
@@ -118,7 +125,7 @@ public class SearchWordController {
                     dataAllSymptomDiseaseZxyRepository.saveAndFlush(da);
                 }
 
-                String res= assiginTask(jobId,searchContent.getId());
+                String res= assiginBaiduTask(jobId,searchContent.getId(),refreshUrl);
                 log.info(res);
 
                 map.put("id",searchContent.getId());
@@ -270,6 +277,8 @@ public class SearchWordController {
                             if (each_da.getOrigin_baike() == 1) {
                                 //已经找到
                                 status = 10;
+                                //读取url
+                                diseaseUrl=userRepository.findById(each_da.getBaike_id()).orElse(null).getOrigin_url();
                                 Map<String, Object> map1 = new LinkedHashMap<>();
                                 map1.put(word, current_word);
                                 map1.put(jobId, returnJobId("baidubaike"));
@@ -277,10 +286,12 @@ public class SearchWordController {
                                 map1.put(searchStatus, status);
                                 map1.put(item, each_da);
                                 map1.put(originId, 0);
+                                map1.put("url",diseaseUrl);
                                 list.add(map1);
                             } else {
                                 //没有找到
                                 status = 20;
+                                diseaseUrl=baseBaikeUrl+current_word;
                                 Map<String, Object> map1 = new LinkedHashMap<>();
                                 map1.put(word, current_word);
                                 map1.put(jobId, returnJobId("baidubaike"));
@@ -288,6 +299,7 @@ public class SearchWordController {
                                 map1.put(searchStatus, status);
                                 map1.put(item, null);
                                 map1.put(originId, 0);
+                                map1.put("url",diseaseUrl);
                                 list.add(map1);
                             }
                         }
@@ -307,6 +319,7 @@ public class SearchWordController {
                         //百度百科
                         new_content=0;
                         status = 20;
+                        diseaseUrl=baseBaikeUrl+content;
                         Map<String, Object> map2 = new LinkedHashMap<>();
                         map2.put(word, content);
                         map2.put(jobId, returnJobId("baidubaike"));
@@ -314,12 +327,14 @@ public class SearchWordController {
                         map2.put(searchStatus, status);
                         map2.put(item, null);
                         map2.put(originId, 0);
+                        map2.put("url",diseaseUrl);
                         list.add(map2);
                     }
 
                     if(new_content==1){
                         //百度百科
                         status = 20;
+                        diseaseUrl=baseBaikeUrl+content;
                         Map<String, Object> map2 = new LinkedHashMap<>();
                         map2.put(word, content);
                         map2.put(jobId, returnJobId("baidubaike"));
@@ -327,6 +342,7 @@ public class SearchWordController {
                         map2.put(searchStatus, status);
                         map2.put(item, null);
                         map2.put(originId, 0);
+                        map2.put("url",diseaseUrl);
                         list.add(map2);
                     }
 
@@ -344,7 +360,6 @@ public class SearchWordController {
                 List<data_all_drug_patent> list1=dataAllDrugPatentRepository.findByName(content);
                 if(list1.size()>0){
                     map.put("中成药","200");
-                    String url="";
                     String cur_word="";
                     int cur_id=0;
                     for(data_all_drug_patent da :list1) {
@@ -410,7 +425,7 @@ public class SearchWordController {
                             //已经找到
                             status = 10;
                             cur_id=da.getBaike_id();
-
+                            patentUrl= patentBaidubaikeRepository.findById(da.getBaike_id()).orElse(null).getOrigin_url();
                             Map<String, Object> map1 = new LinkedHashMap<>();
                             map1.put(word, cur_word);
                             map1.put(jobId, patent_baike_id);
@@ -418,10 +433,12 @@ public class SearchWordController {
                             map1.put(searchStatus, status);
                             map1.put(item, da);
                             map1.put(originId, cur_id);
+                            map1.put("url",patentUrl);
                             list.add(map1);
                         } else {
                             //没有找到
                             status = 20;
+                            patentUrl=baseBaikeUrl+cur_word;
                             Map<String, Object> map1 = new LinkedHashMap<>();
                             map1.put(word, cur_word);
                             map1.put(jobId, patent_baike_id);
@@ -429,6 +446,7 @@ public class SearchWordController {
                             map1.put(searchStatus, status);
                             map1.put(item, null);
                             map1.put(originId, 0);
+                            map1.put("url",diseaseUrl);
                             list.add(map1);
                         }
                     }
@@ -459,6 +477,7 @@ public class SearchWordController {
                     //百度百科
                     new_content=0;
                     status = 20;
+                    patentUrl=baseBaikeUrl+content;
                     Map<String, Object> map3 = new LinkedHashMap<>();
                     map3.put(word, content);
                     map3.put(jobId, patent_baike_id);
@@ -466,12 +485,14 @@ public class SearchWordController {
                     map3.put(searchStatus, status);
                     map3.put(item, null);
                     map3.put(originId, 0);
+                    map3.put("url",diseaseUrl);
                     list.add(map3);
                 }
 
                 if(new_content==1){
                     //百度百科
                     status = 20;
+                    patentUrl=baseBaikeUrl+content;
                     Map<String, Object> map3 = new LinkedHashMap<>();
                     map3.put(word, content);
                     map3.put(jobId, returnJobId("patentbaike"));
@@ -479,6 +500,7 @@ public class SearchWordController {
                     map3.put(searchStatus, status);
                     map3.put(item, null);
                     map3.put(originId, 0);
+                    map3.put("url",diseaseUrl);
                     list.add(map3);
                 }
             }
@@ -597,8 +619,35 @@ public class SearchWordController {
         return result;
     }
 
-
-
+    /**
+     *
+     * @param id
+     * @param task_id
+     * @return
+     * @throws SchedulerException
+     */
+    private String assiginBaiduTask(int id,int task_id,String url) throws SchedulerException {
+        String result;
+        JobEntity entity = jobService.getJobEntityById(id);
+        //设置上下文参数
+        entity=jobService.updateParamBaidu(task_id,url,entity);
+        if(Objects.isNull(entity)) return "error: id is not exits ";
+        synchronized (log){
+            JobKey jobKey = jobService.getJobKey(entity,task_id);
+            Scheduler scheduler = schedulerFactoryBean.getScheduler();
+            scheduler.pauseJob(jobKey);
+            scheduler.unscheduleJob(TriggerKey.triggerKey(jobKey.getName(),jobKey.getGroup()));
+            scheduler.deleteJob(jobKey);
+            JobDataMap map = jobService.getJobDataMap(entity);
+            JobDetail jobDetail = jobService.getJobDetail(jobKey,entity.getDescription(),map);
+            Trigger trigger=jobService.getTrigger(entity);
+            Trigger trigger1=TriggerBuilder.newTrigger().withPriority(1).startNow().build();
+            scheduler.scheduleJob(jobDetail,trigger1);
+//            scheduler.start();330
+            result = "Luntch job : "+entity.getName() +"\t at Path: "+entity.getRunPath()+" success !";
+        }
+        return result;
+    }
 
     public String generateCron(String time, String num, String gap){
         //second

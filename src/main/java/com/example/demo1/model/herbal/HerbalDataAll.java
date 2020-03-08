@@ -52,12 +52,12 @@ public class HerbalDataAll {
 
     @Column private String comment;
 
-    @Column private int origin_yaobw;
-    @Column private int yaobw_id;
-    @Column private int origin_zyybd;
-    @Column private int zyybd_id;
-    @Column private int origin_baike;
-    @Column private int baike_id;
+    @Column private Integer origin_yaobw;
+    @Column private Integer yaobw_id;
+    @Column private Integer origin_zyybd;
+    @Column private Integer zyybd_id;
+    @Column private Integer origin_baike;
+    @Column private Integer baike_id;
 
     public HerbalDataAll(){}
 

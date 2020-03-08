@@ -25,6 +25,12 @@ public class DynamicJobService {
         return job;
     }
 
+    public JobEntity updateParamBaidu(int id,String url,JobEntity job){
+        job.setParameter(String.valueOf(id));
+        job.setVmParam(url);
+        return job;
+    }
+
     //获取 JobDataMap
     public JobDataMap getJobDataMap(JobEntity job){
         JobDataMap map = new JobDataMap();
