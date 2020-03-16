@@ -67,7 +67,12 @@ public class DynamicJob implements Job {
                 List<String> commands = new ArrayList<>();
                 String idparam="id="+parameter;
                 String refreshURL="refreshURL="+url;
-                commands= Arrays.asList("scrapy","crawl","getData","-a",idparam);
+                if(url.contains("http")){
+                    commands=Arrays.asList("scrapy","crawl","getData","-a",idparam,"-a",refreshURL);
+                }
+                else {
+                    commands = Arrays.asList("scrapy", "crawl", "getData", "-a", idparam);
+                }
 //                String com = "scrapy crawl getData";
                 processBuilder.command(commands);
                 processBuilder.redirectErrorStream(true);
