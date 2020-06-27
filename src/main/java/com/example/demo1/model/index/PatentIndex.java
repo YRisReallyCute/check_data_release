@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 @Data
-@Document(indexName = "patent_data",type = "doc",shards = 1,replicas = 0)
+@Document(indexName = "patent_data1",type = "doc",shards = 1,replicas = 0)
 public class PatentIndex {
     @Id
     private Long id;

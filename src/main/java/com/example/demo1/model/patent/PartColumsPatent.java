@@ -13,7 +13,15 @@ public class PartColumsPatent {
     private Integer zyybd_id;
     private Integer origin_baike;
     private Integer baike_id;
+    private double score;
 
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 
     public PartColumsPatent(){}
 

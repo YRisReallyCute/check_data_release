@@ -131,15 +131,28 @@ public class PatentIndexController {
             public <T> AggregatedPage<T> mapResults(SearchResponse searchResponse, Class<T> aClass, Pageable pageable) {
                 ArrayList<PatentIndex> patentList=new ArrayList<>();
                 SearchHits hits = searchResponse.getHits();
+                if(hits.getHits().length == 0){
+                    return null;
+                }
                 for (SearchHit hit:hits) {
-                    if(hits.getHits().length == 0){
-                        return null;
-                    }
-                    else if(hit.getSourceAsMap()!=null){
+                    if(hit.getSourceAsMap()!=null){
                         PatentIndex p =new PatentIndex();
                         p.setScore((double)hit.getScore());
+                        String id=String.valueOf(hit.getSourceAsMap().get("id"));
                         String temp_ym = String.valueOf(hit.getSourceAsMap().get("info_ym"));
+                        String temp_syjj=String.valueOf(hit.getSourceAsMap().get("info_syjj"));
+                        String temp_cf=String.valueOf(hit.getSourceAsMap().get("info_cf"));
+                        String temp_gnzz=String.valueOf(hit.getSourceAsMap().get("info_gnzz"));
+                        String temp_lcyy=String.valueOf(hit.getSourceAsMap().get("info_lcyy"));
+                        String temp_zysx=String.valueOf(hit.getSourceAsMap().get("info_zysx"));
+
+                        p.setInfo_cf(temp_cf.replace(cf,"<span style='color: red'>" + cf + "</span>"));
+                        p.setInfo_gnzz(temp_gnzz.replace(gnzz,"<span style='color: red'>" + gnzz + "</span>"));
+                        p.setInfo_lcyy(temp_lcyy.replace(lcyy,"<span style='color: red'>" + lcyy + "</span>"));
+                        p.setInfo_syjj(temp_syjj.replace(zysx,"<span style='color: red'>" + zysx + "</span>"));
+                        p.setInfo_zysx(temp_zysx.replace(zysx,"<span style='color: red'>" + zysx + "</span>"));
                         p.setInfo_ym(temp_ym);
+                        p.setId((long) Integer.parseInt(id));
                         patentList.add(p);
                     }
                 }
@@ -149,31 +162,66 @@ public class PatentIndexController {
             }
         });
 
+        List<Map> list=new LinkedList<>();
+        if(resultPage==null){
+            map.put("info", "检索结果小于50条");
+            map.put("code", "200");
+            map.put("totalNum",0);
+            map.put("result",list);
+            return map;
+        }
+
         List<PatentIndex> patentList=resultPage.getContent();
         Set<String> set=new LinkedHashSet<>();
-        Set<double> scoreSet = new LinkedHashSet<>();
+//        Set<double> scoreSet = new LinkedHashSet<>();
         patentList.forEach(ea->{
-            if(set.size()<50){
-                set.add(ea.getInfo_ym());
+            if(list.size()<50){
+                int b=0;
+                for (Map tmp:list) {
+                    if(tmp.get("info_ym").equals(ea.getInfo_ym())){
+                        b=1;
+                        break;
+                    }
+                }
+                if(b==0){
+                    Map<String,Object> map1=new LinkedHashMap();
+                    data_all_drug_patent da = dataAllDrugPatentRepository.findByYm(ea.getInfo_ym());
+                    PartColumsPatent p=new PartColumsPatent(da);
+                    map1.put("id",da.getId());
+                    map1.put("info_ym",da.getInfo_ym());
+                    map1.put("status",da.getStatus());
+                    map1.put("comment",da.getComment());
+                    map1.put("origin_yaobw",da.getOrigin_yaobw());
+                    map1.put("yaobw_id",da.getYaobw_id());
+                    map1.put("origin_zyybd",da.getOrigin_zyybd());
+                    map1.put("zyybd_id",da.getZyybd_id());
+                    map1.put("origin_baike",da.getOrigin_baike());
+                    map1.put("baike_id",da.getBaike_id());
+                    map1.put("score",ea.getScore());
+                    String ea_ym = ea.getInfo_ym();
+                    ea.setInfo_ym(ea_ym.replace(ym,"<span style='color: red'>" + ym + "</span>"));
+                    map1.put("content",ea);
+                    list.add(map1);
+                }
             }
-
         });
-        if(set.size()==50){
+        if(list.size()<=50){
             map.put("code","201");
-            map.put("info","检索结果超过50条");
+            map.put("info","检索结果小于50条");
         }
         else {
-            map.put("info", "检索结果小于50条");
+            map.put("info", "检索结果超过50条");
             map.put("code", "200");
         }
 
-        List<PartColumsPatent> list=new LinkedList<>();
-        if(set.size()!=0) {
-            set.forEach(ea -> {
-                data_all_drug_patent da = dataAllDrugPatentRepository.findByYm(ea);
-                list.add(new PartColumsPatent(da));
-            });
-        }
+//        if(set.size()!=0) {
+//            set.forEach(ea -> {
+//                data_all_drug_patent da = dataAllDrugPatentRepository.findByYm(ea.getInfo_ym());
+//                PartColumsPatent p = new PartColumsPatent(da);
+//                p.setScore(ea.getScore());
+//                list.add(p);
+//            });
+//        }
         map.put("totalNum",list.size());
         map.put("result",list);
         return map;
