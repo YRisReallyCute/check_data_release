@@ -114,7 +114,7 @@ public class SearchWordController {
         Map<String,Object> map=new LinkedHashMap<>();
         Date dt=new Date();
         try {
-            if(jobId==1){
+            if(jobId==1 | jobId==10){
                 //百度百科
                 SearchContent searchContent = new SearchContent(word, jobId, status, "",dt,type2ch(type));
                 searchContentRepository.saveAndFlush(searchContent);
@@ -207,6 +207,7 @@ public class SearchWordController {
      */
     @GetMapping("/conf/search_content")
     private Map<String,Object> searchSaveContent(@RequestParam String content, @RequestParam String chlist){
+        //10:待更新，20：待插入，30：不能更新也不能插入
         content=content.trim();
         Map<String,Object> map = new LinkedHashMap<>();
         String idList="";
@@ -446,7 +447,7 @@ public class SearchWordController {
                             map1.put(searchStatus, status);
                             map1.put(item, null);
                             map1.put(originId, 0);
-                            map1.put("url",diseaseUrl);
+                            map1.put("url",patentUrl);
                             list.add(map1);
                         }
                     }
@@ -485,7 +486,7 @@ public class SearchWordController {
                     map3.put(searchStatus, status);
                     map3.put(item, null);
                     map3.put(originId, 0);
-                    map3.put("url",diseaseUrl);
+                    map3.put("url",patentUrl);
                     list.add(map3);
                 }
 
@@ -500,7 +501,7 @@ public class SearchWordController {
                     map3.put(searchStatus, status);
                     map3.put(item, null);
                     map3.put(originId, 0);
-                    map3.put("url",diseaseUrl);
+                    map3.put("url",patentUrl);
                     list.add(map3);
                 }
             }

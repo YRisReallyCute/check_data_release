@@ -1,0 +1,23 @@
+{
+  "index":{
+    "number_of_shards":1,
+    "number_of_replicas":0,
+    "analysis":{
+      "analyzer": {
+        "whitespace_ty": {
+          "tokenizer": "whitespace",
+          "filter": [
+            "synonym_tycb"
+          ]
+        }
+      },
+      "filter": {
+        "synonym_tycb": {
+          "type" : "dynamic_synonym",
+          "synonyms_path" : "http://ronyun.com/test/analyzer/synonym_tycb.txt",
+          "interval": 15
+        }
+      }
+    }
+  }
+}
