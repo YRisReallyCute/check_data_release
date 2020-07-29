@@ -4,18 +4,31 @@
     "number_of_replicas":0,
     "analysis":{
       "analyzer": {
-        "whitespace_ty": {
+        "whitespace_td": {
           "tokenizer": "whitespace",
           "filter": [
-            "synonym_tycb"
+            "synonym_tdcb"
           ]
+        },
+        "comma": {
+          "tokenizer": "comma"
         }
       },
       "filter": {
-        "synonym_tycb": {
+        "synonym_tdcb": {
           "type" : "dynamic_synonym",
-          "synonyms_path" : "http://ronyun.com/test/analyzer/synonym_tycb.txt",
+          "synonyms_path" : "http://ronyun.com/test/analyzer/synonym_tdcb.txt",
           "interval": 15
+        }
+      },
+      "tokenizer": {
+        "comma": {
+          "type": "pattern",
+          "pattern": "[,:;；，。./]"
+        },
+        "comma1": {
+          "type": "pattern",
+          "pattern": "[:;；/。.]"
         }
       }
     }

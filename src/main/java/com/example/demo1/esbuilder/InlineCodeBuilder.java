@@ -56,7 +56,7 @@ public class InlineCodeBuilder {
         StringBuilder code = new StringBuilder();
         code.append(begin);
         for (InlineCode inlineCode : bodyClause) {
-            code.append(inlineCode.build());
+            code.append(inlineCode.build2());
         }
         code.append(end);
 

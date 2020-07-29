@@ -10,11 +10,13 @@ import com.example.demo1.repository.index.PatentIndexRepository;
 import com.example.demo1.repository.patent.DataAllDrugPatentRepository;
 import com.example.demo1.service.index.SysVarValueService;
 import com.example.demo1.util.ESUtils;
+import com.example.demo1.util.HighlightUtil;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeAction;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequest;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeRequestBuilder;
 import org.elasticsearch.action.admin.indices.analyze.AnalyzeResponse;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -63,8 +65,14 @@ public class PatentIndexController {
                                             @RequestParam(required = false,defaultValue = "*") String gnzz,@RequestParam(required = false,defaultValue = "*")String lcyy,
                                             @RequestParam(required = false,defaultValue = "*") String zysx,
                                             @PageableDefault(size = 250,page = 0)Pageable pageable){
+
+        ym = generateSearchWords(ym);cf = generateSearchWords(cf);
+        gnzz = generateSearchWords(gnzz);lcyy = generateSearchWords(lcyy);
+        zysx = generateSearchWords(zysx);
+
         Map<String,Object> map=new LinkedHashMap<>();
         String indexName = "patent_data1";
+        String regix = "[,，；; ]";
         Script myScript = new MyScriptBuilder()
                 .withLang("painless")
                 .withScriptType(ScriptType.INLINE)
@@ -73,134 +81,92 @@ public class PatentIndexController {
                                 new InlineCode().withKeyName("ym")
                                         .withField("info_ym.keyword")
                                         .withSearchWords(ym)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ).addBody(
                                 new InlineCode().withKeyName("cf")
                                         .withField("info_cf.keyword")
                                         .withSearchWords(cf)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ).addBody(
                                 new InlineCode().withKeyName("gnzz")
                                         .withField("info_gnzz.keyword")
                                         .withSearchWords(gnzz)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ).addBody(
                                 new InlineCode().withKeyName("lcyy")
                                         .withField("info_lcyy.keyword")
                                         .withSearchWords(lcyy)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ).addBody(
                                 new InlineCode().withKeyName("zysx")
                                         .withField("info_zysx.keyword")
                                         .withSearchWords(zysx)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ).addBody(
                                 new InlineCode().withKeyName("syjj")
                                         .withField("info_syjj.keyword")
                                         .withSearchWords(zysx)
-                                        .withAnalyzer("whitespace_ty", indexName)
+                                        .withRegix(regix)
                                         .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
                         ))
                 .build();
 
         ScriptSortBuilder scriptSortBuilder = new ScriptSortBuilder(myScript, ScriptSortBuilder.ScriptSortType.NUMBER).order(SortOrder.DESC);
+
+        String[] fieldList = new String[]{"info_ym", "info_lcyy", "info_gnzz", "info_cf", "info_syjj", "info_zysx"};
+        String pre = "<em>";
+        String post = "</em>";
+        Map<String, Object> fieldKeywordMap = new HashMap<>();
+        fieldKeywordMap.put(fieldList[0], ym);fieldKeywordMap.put(fieldList[1], lcyy);
+        fieldKeywordMap.put(fieldList[2], gnzz);fieldKeywordMap.put(fieldList[3], cf);
+        fieldKeywordMap.put(fieldList[4], zysx);fieldKeywordMap.put(fieldList[5], zysx);
+
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+
+        for (String s : fieldList) {
+            String searchword = fieldKeywordMap.get(s).toString();
+            BoolQueryBuilder bq = new BoolQueryBuilder();
+            bq.should(QueryBuilders.queryStringQuery(searchword.replace("/", " ")).field(s).analyzer("comma"));
+
+            String[] keywords = searchword.split("[/,;，； ]");
+            for (String keyword : keywords) {
+                bq.should(QueryBuilders.matchPhraseQuery(s + ".std", keyword));
+            }
+            bq.boost(Float.parseFloat(sysVarValueService.getValue(s.replace("info","data_patent"))));
+            boolQueryBuilder.must(bq);
+        }
+
         NativeSearchQuery searchQuery=new NativeSearchQueryBuilder()
-                .withQuery(
-                        QueryBuilders.boolQuery()
-                                .must(QueryBuilders.boolQuery()
-                                        .must(QueryBuilders.boolQuery()
-                                                .should(QueryBuilders.queryStringQuery(ym).field("info_ym"))
-                                                .should(QueryBuilders.matchPhraseQuery("info_ym.std",ym))
-                                                .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_ym")))
-                                        )
-                                        .must(QueryBuilders.boolQuery()
-                                                .should(QueryBuilders.queryStringQuery(lcyy).field("info_lcyy"))
-                                                .should(QueryBuilders.matchPhraseQuery("info_lcyy.std",lcyy))
-                                                .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_lcyy")))
-                                        )
-                                        .must(QueryBuilders.boolQuery()
-                                                .should(QueryBuilders.queryStringQuery(gnzz).field("info_gnzz"))
-                                                .should(QueryBuilders.matchPhraseQuery("info_gnzz.std",gnzz))
-                                                .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_gnzz")))
-                                        )
-                                        .must(QueryBuilders.boolQuery()
-                                                .should(QueryBuilders.queryStringQuery(cf).field("info_cf"))
-                                                .should(QueryBuilders.matchPhraseQuery("info_cf.std",cf))
-                                                .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_cf")))
-                                        )
-                                        .must(QueryBuilders.boolQuery()
-                                                .should(QueryBuilders.boolQuery()
-                                                        .should(QueryBuilders.queryStringQuery(zysx).field("info_syjj"))
-                                                        .should(QueryBuilders.matchPhraseQuery("info_syjj.std",zysx))
-                                                        .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_syjj")))
-                                                )
-                                                .should(QueryBuilders.boolQuery()
-                                                        .should(QueryBuilders.queryStringQuery(zysx).field("info_zysx"))
-                                                        .should(QueryBuilders.matchPhraseQuery("info_zysx.std",zysx))
-                                                        .boost(Float.parseFloat(sysVarValueService.getValue("data_patent_zysx")))
-                                                )
-                                        )
-
-                                )
-
-
-
-//                                .must(QueryBuilders.queryStringQuery(ym).field("info_ym"))
-////                                .must(QueryBuilders.matchQuery("info_ym",ym))
-//                                .must(QueryBuilders.queryStringQuery(cf).field("info_cf"))
-//                                .must(QueryBuilders.queryStringQuery(gnzz).field("info_gnzz"))
-//                                .must(QueryBuilders.queryStringQuery(lcyy).field("info_lcyy"))
-//                                .must(QueryBuilders.queryStringQuery(syjj).field("info_syjj"))
-//                                .must(QueryBuilders.queryStringQuery(zysx).field("info_zysx"))
-//
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(ym).field("info_ym"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_ym")))
-//                                )
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(cf).field("info_cf"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_cf")))
-//                                )
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(gnzz).field("info_gnzz"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_gnzz")))
-//                                )
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(lcyy).field("info_lcyy"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_lcyy")))
-//                                )
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(syjj).field("info_syjj"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_syjj")))
-//                                )
-//                                .must(QueryBuilders.boolQuery()
-//                                        .should(QueryBuilders.queryStringQuery(zysx).field("info_zysx"))
-//                                        .should(QueryBuilders.boolQuery().mustNot(QueryBuilders.existsQuery("info_zysx")))
-//                                )
-
-                )
-                .withHighlightFields(new HighlightBuilder.Field("info_ym").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0),
-                        new HighlightBuilder.Field("info_cf").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0),
-                        new HighlightBuilder.Field("info_lcyy").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0),
-                        new HighlightBuilder.Field("info_gnzz").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0),
-                        new HighlightBuilder.Field("info_syjj").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0),
-                        new HighlightBuilder.Field("info_zysx").postTags("</span>").preTags("<span style='color: red'>" ).fragmentSize(0).numOfFragments(0))
+                .withQuery(QueryBuilders.boolQuery().must(boolQueryBuilder))
+                .withHighlightFields(new HighlightBuilder.Field("info_ym").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_cf").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_lcyy").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_gnzz").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_syjj").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_zysx").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_ym.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_cf.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_lcyy.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_gnzz.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_syjj.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0),
+                        new HighlightBuilder.Field("info_zysx.std").postTags(post).preTags(pre).fragmentSize(0).numOfFragments(0))
                 .withPageable(pageable)
                 .withSort(scriptSortBuilder)// 自定义排序
                 .withSort(SortBuilders.scoreSort().order(SortOrder.DESC)) // ES打分排序  (有两个的时候，先按照1 再按照2)
                 .build();
         Iterable<PatentIndex> result=patentIndexRepository.search(searchQuery);
 
-        List<String> ymTokens=getAnalyzeSearchTerms(indexName,ym,"whitespace_ty");
-        List<String> cfTokens=getAnalyzeSearchTerms(indexName,cf,"whitespace_ty");
-        List<String> gnzzTokens=getAnalyzeSearchTerms(indexName,gnzz,"whitespace_ty");
-        List<String> lcyyTokens=getAnalyzeSearchTerms(indexName,lcyy,"whitespace_ty");
-        List<String> zysxTokens=getAnalyzeSearchTerms(indexName,zysx,"whitespace_ty");
+        String analyzer = "whitespace_td";
+        List<String> ymTokens=getAnalyzeSearchTerms(indexName,ym,"ik_smart");
+        List<String> cfTokens=getAnalyzeSearchTerms(indexName,cf,analyzer);
+        List<String> gnzzTokens=getAnalyzeSearchTerms(indexName,gnzz,analyzer);
+        List<String> lcyyTokens=getAnalyzeSearchTerms(indexName,lcyy,analyzer);
+        List<String> zysxTokens=getAnalyzeSearchTerms(indexName,zysx,analyzer);
 
 
         Page<PatentIndex> resultPage=elasticsearchTemplate.queryForPage(searchQuery, PatentIndex.class, new SearchResultMapper() {
@@ -214,7 +180,7 @@ public class PatentIndexController {
                 for (SearchHit hit:hits) {
                     if(hit.getSourceAsMap()!=null){
                         PatentIndex p =new PatentIndex();
-                        p.setScore((double)hit.getScore());
+                        p.setSortValue(hit.getSortValues());
                         String id=String.valueOf(hit.getSourceAsMap().get("id"));
                         String temp_ym = String.valueOf(hit.getSourceAsMap().get("info_ym"));
                         String temp_syjj=String.valueOf(hit.getSourceAsMap().get("info_syjj"));
@@ -228,21 +194,26 @@ public class PatentIndexController {
                         p.setInfo_syjj(temp_syjj);
                         p.setInfo_zysx(temp_zysx);
 
-                        if(hit.getHighlightFields().get("info_cf")!=null) {
-                            p.setInfo_cf(hit.getHighlightFields().get("info_cf").fragments()[0].toString());
+                        try {
+                            if(chooseHighlight(hit, "info_cf") != null) {
+                                p.setInfo_cf(chooseHighlight(hit, "info_cf"));
+                            }
+                            if(chooseHighlight(hit, "info_gnzz") != null) {
+                                p.setInfo_gnzz(chooseHighlight(hit, "info_gnzz"));
+                            }
+                            if(chooseHighlight(hit, "info_lcyy") != null) {
+                                p.setInfo_lcyy(chooseHighlight(hit, "info_lcyy"));
+                            }
+                            if(chooseHighlight(hit, "info_zysx") != null){
+                                p.setInfo_zysx(chooseHighlight(hit, "info_zysx"));
+                            }
+                            if(chooseHighlight(hit, "info_syjj") != null) {
+                                p.setInfo_syjj(chooseHighlight(hit, "info_syjj"));
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        if(hit.getHighlightFields().get("info_gnzz")!=null) {
-                            p.setInfo_gnzz(hit.getHighlightFields().get("info_gnzz").fragments()[0].toString());
-                        }
-                        if(hit.getHighlightFields().get("info_lcyy")!=null) {
-                            p.setInfo_lcyy(hit.getHighlightFields().get("info_lcyy").fragments()[0].toString());
-                        }
-                        if(hit.getHighlightFields().get("info_zysx")!=null) {
-                            p.setInfo_zysx(hit.getHighlightFields().get("info_zysx").fragments()[0].toString());
-                        }
-                        if(hit.getHighlightFields().get("info_syjj")!=null) {
-                            p.setInfo_syjj(hit.getHighlightFields().get("info_syjj").fragments()[0].toString());
-                        }
+
 
 //                        if(cfTokens!=null) {
 //                            cfTokens.forEach(cfToken -> {
@@ -267,7 +238,6 @@ public class PatentIndexController {
 //                        }
 
                         p.setInfo_ym(temp_ym);
-                        p.setId((long) Integer.parseInt(id));
                         patentList.add(p);
                     }
                 }
@@ -320,7 +290,7 @@ public class PatentIndexController {
                     map1.put("zyybd_id",da.getZyybd_id());
                     map1.put("origin_baike",da.getOrigin_baike());
                     map1.put("baike_id",da.getBaike_id());
-                    map1.put("score",ea.getScore());
+                    map1.put("sortValues",ea.getSortValue());
 //                    String ea_ym = ea.getInfo_ym();
                     if(ymTokens!=null) {
                         ymTokens.forEach(ymToken -> {
@@ -347,6 +317,29 @@ public class PatentIndexController {
         return map;
     }
 
+    /**
+     * change word a b c -> a1/a2;b1/b2;c1/c2
+     */
+    private String generateSearchWords(String word){
+        /*String regix = "[,，;； ]";
+        String[] wordList = word.split(regix);
+        StringBuilder res = new StringBuilder();
+        for (String s : wordList) {
+            List<String> synonymList = this.getAnalyzeSearchTerms("patent_data1", word, "whitespace_td");
+            assert synonymList != null;
+            StringBuilder tmp = new StringBuilder();
+            for (String s1 : synonymList) {
+                tmp.append("/");
+                tmp.append(s1);
+            }
+            tmp.deleteCharAt(0);
+            res.append(";");
+            res.append(tmp);
+        }
+        res.deleteCharAt(0);
+        return res.toString();*/
+        return word;
+    }
 
     /**
      * 获取分词结果
@@ -355,7 +348,7 @@ public class PatentIndexController {
      * @param method 分词方式
      * @return
      */
-    public List getAnalyzeSearchTerms(String indexName,String searchContent,String method){
+    private List<String> getAnalyzeSearchTerms(String indexName,String searchContent,String method){
 
         if(searchContent.equals("*"))
             return null;
@@ -371,5 +364,26 @@ public class PatentIndexController {
         });
 
         return searchTermList;
+    }
+
+
+    private String chooseHighlight(SearchHit hit, String field) throws Exception {
+        String res;
+        String post = "</em>";
+        String pre = "<em>";
+        if(hit.getHighlightFields().get(field) != null){
+            res = hit.getHighlightFields().get(field).fragments()[0].toString();
+            if(hit.getHighlightFields().get(field + ".std") != null)
+                res = HighlightUtil.combine(hit.getHighlightFields().get(field).fragments()[0].toString(),
+                        hit.getHighlightFields().get(field + ".std").fragments()[0].toString(), pre, post);
+        } else if(hit.getHighlightFields().get(field + ".std") != null) {
+            res = hit.getHighlightFields().get(field + ".std").fragments()[0].toString();
+        } else {
+            res = null;
+        }
+        if(res != null) {
+            res = res.replace("<em>", "<span style='color:red'>").replace("</em>", "</span>");
+        }
+        return res;
     }
 }

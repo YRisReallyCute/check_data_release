@@ -125,4 +125,20 @@ public class InlineCode {
                                 "}", this.keyName, this.field, this.field, this.arrayName, this.weight);
     }
 
+    public String build2(){
+        return
+                String.format(
+                        "for(int i = 0; i < params.%s; i++){" +
+                            "String[] array = /\\//.split(params['%s'][i]);" +
+                            "if(doc['%s'].value!=null){" +
+                                "for(int j = 0; j < array.length; j++) {" +
+                                    "if(doc['%s'].value.contains(array[j])){" +
+                                        "total+=%d;" +
+                                        "break;" +
+                                    "}" +
+                                "}" +
+                            "}" +
+                        "}", this.keyName, this.arrayName, this.field, this.field, this.weight);
+    }
+
 }
