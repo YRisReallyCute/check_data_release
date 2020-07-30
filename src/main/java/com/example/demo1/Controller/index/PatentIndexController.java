@@ -82,37 +82,37 @@ public class PatentIndexController {
                                         .withField("info_ym.keyword")
                                         .withSearchWords(ym)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_ym")))
                         ).addBody(
                                 new InlineCode().withKeyName("cf")
                                         .withField("info_cf.keyword")
                                         .withSearchWords(cf)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_cf")))
                         ).addBody(
                                 new InlineCode().withKeyName("gnzz")
                                         .withField("info_gnzz.keyword")
                                         .withSearchWords(gnzz)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_gnzz")))
                         ).addBody(
                                 new InlineCode().withKeyName("lcyy")
                                         .withField("info_lcyy.keyword")
                                         .withSearchWords(lcyy)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_lcyy")))
                         ).addBody(
                                 new InlineCode().withKeyName("zysx")
                                         .withField("info_zysx.keyword")
                                         .withSearchWords(zysx)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_zysx")))
                         ).addBody(
                                 new InlineCode().withKeyName("syjj")
                                         .withField("info_syjj.keyword")
                                         .withSearchWords(zysx)
                                         .withRegix(regix)
-                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_weight")))
+                                        .withWeight(Integer.valueOf(sysVarValueService.getValue("data_patent_syjj")))
                         ))
                 .build();
 
@@ -131,7 +131,7 @@ public class PatentIndexController {
         for (String s : fieldList) {
             String searchword = fieldKeywordMap.get(s).toString();
             BoolQueryBuilder bq = new BoolQueryBuilder();
-            bq.should(QueryBuilders.queryStringQuery(searchword.replace("/", " ")).field(s).analyzer("comma"));
+            bq.should(QueryBuilders.queryStringQuery(searchword.replace("/", ",")).field(s).analyzer("comma"));
 
             String[] keywords = searchword.split("[/,;，； ]");
             for (String keyword : keywords) {
@@ -317,28 +317,43 @@ public class PatentIndexController {
         return map;
     }
 
+
+    /**
+     * test generateSearchwords
+     */
+//    @RequestMapping(value = "/getwords")
+//    public String testGenerate(String words){
+//       return generateSearchWords(words);
+//    }
     /**
      * change word a b c -> a1/a2;b1/b2;c1/c2
      */
     private String generateSearchWords(String word){
-        /*String regix = "[,，;； ]";
+        if(word.equals("*"))
+            return word;
+        String regix = "[,，;； ]";
         String[] wordList = word.split(regix);
         StringBuilder res = new StringBuilder();
         for (String s : wordList) {
-            List<String> synonymList = this.getAnalyzeSearchTerms("patent_data1", word, "whitespace_td");
-            assert synonymList != null;
-            StringBuilder tmp = new StringBuilder();
-            for (String s1 : synonymList) {
-                tmp.append("/");
-                tmp.append(s1);
+            if(s.contains("/")) {
+                res.append(";");
+                res.append(s);
             }
-            tmp.deleteCharAt(0);
-            res.append(";");
-            res.append(tmp);
+            else {
+                List<String> synonymList = this.getAnalyzeSearchTerms("patent_data1", s, "whitespace_td");
+                assert synonymList != null;
+                StringBuilder tmp = new StringBuilder();
+                for (String s1 : synonymList) {
+                    tmp.append("/");
+                    tmp.append(s1);
+                }
+                tmp.deleteCharAt(0);
+                res.append(";");
+                res.append(tmp);
+            }
         }
         res.deleteCharAt(0);
-        return res.toString();*/
-        return word;
+        return res.toString();
     }
 
     /**
